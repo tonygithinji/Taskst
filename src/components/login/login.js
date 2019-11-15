@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Header, Card } from "semantic-ui-react";
@@ -29,7 +30,7 @@ class Login extends Component {
                     </Card.Content>
                 </Card>
                 <Header as="h5" textAlign="center">
-                    Don't have an account? <Link to="/register">Sign Up</Link>
+                    <span>Don't have an account?</span> <Link to="/register">Sign Up</Link>
                 </Header>
             </div>
         )

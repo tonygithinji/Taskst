@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from "../components/login";
 import { Route } from "react-router-dom";
+import Login from "../components/login";
 
 const LoginRoute = () => <Route path="/login" component={Login} />
 
