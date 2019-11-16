@@ -1,0 +1,3 @@
+export const USER_LOGIN = "USER_LOGIN";
+export const USER_LOGGEDIN = "USER_LOGGEDIN";
+export const USER_LOGGED_OUT = "USER_LOGGED_OUT";

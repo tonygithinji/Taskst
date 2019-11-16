@@ -1,16 +1,57 @@
-import React from 'react';
-import { Container } from "semantic-ui-react";
+/* eslint-disable react/no-did-mount-set-state */
+import React, { Component } from 'react';
+import { Route, Switch } from "react-router-dom";
+import { Container, Loader } from "semantic-ui-react";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import styles from './app.module.css';
-import AuthRoutes from "../../routes/auth";
-import UserRoutes from "../../routes/user";
+import { validateToken } from "../../redux/actions/auth";
 
-function App() {
-  return (
-    <Container className={styles.app}>
-      <AuthRoutes.LoginRoute />
-      <UserRoutes.RegisterRoute />
-    </Container>
-  );
+import ProtectedRoute from "../../routes/protected.route";
+import Login from "../login";
+import Register from "../register";
+import Workspaces from "../workspaces";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    };
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem("taskst_token");
+    if (token) {
+      this.props.validateToken(token)
+        .finally(() => this.setState({ loading: false }));
+    } else {
+      this.setState({ loading: false });
+    }
+  }
+
+  render() {
+    const { loading } = this.state;
+
+    return (
+      <Container className={styles.app}>
+        {loading && <Loader active size="big" />}
+
+        {!loading && (
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <ProtectedRoute path="/workspaces" component={Workspaces} />
+          </Switch>
+        )}
+
+      </Container>
+    )
+  }
 }
 
-export default App;
+App.propTypes = {
+  validateToken: PropTypes.func.isRequired
+}
+
+export default connect(null, { validateToken })(App);

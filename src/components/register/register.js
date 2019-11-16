@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import { Header, Card } from "semantic-ui-react";
 import RegisterForm from "./forms/register.form";
 import styles from "./register.module.css";
+import userSignUp from "../../redux/actions/user";
 
 class Register extends Component {
     constructor(props) {
@@ -16,7 +19,7 @@ class Register extends Component {
     }
 
     submit = data => {
-        console.log(data);
+        return this.props.userSignUp(data).then(() => this.props.history.push("/workspaces"));
     }
 
     render() {
@@ -36,4 +39,11 @@ class Register extends Component {
     }
 }
 
-export default Register;
+Register.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
+    userSignUp: PropTypes.func.isRequired
+}
+
+export default connect(null, { userSignUp })(Register);

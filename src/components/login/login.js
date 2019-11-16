@@ -1,9 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { Header, Card } from "semantic-ui-react";
 import LoginForm from "./forms/login.form";
 import styles from "./login.module.css";
+import { userLogin } from "../../redux/actions/auth";
 
 class Login extends Component {
     constructor(props) {
@@ -17,7 +20,8 @@ class Login extends Component {
     }
 
     submit = data => {
-        console.log(data);
+        return this.props.userLogin(data)
+            .then(() => this.props.history.push("/workspaces"));
     }
 
     render() {
@@ -37,4 +41,11 @@ class Login extends Component {
     }
 }
 
-export default Login;
+Login.propTypes = {
+    userLogin: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
+}
+
+export default connect(null, { userLogin })(Login);
