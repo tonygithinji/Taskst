@@ -9,15 +9,6 @@ import styles from "./login.module.css";
 import { userLogin } from "../../redux/actions/auth";
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: {},
-            loading: false,
-            errors: {}
-        }
-    }
 
     submit = data => {
         return this.props.userLogin(data)

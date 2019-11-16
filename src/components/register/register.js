@@ -8,15 +8,6 @@ import styles from "./register.module.css";
 import userSignUp from "../../redux/actions/user";
 
 class Register extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: {},
-            loading: false,
-            errors: {}
-        }
-    }
 
     submit = data => {
         return this.props.userSignUp(data).then(() => this.props.history.push("/workspaces"));

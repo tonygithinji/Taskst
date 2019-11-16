@@ -1,0 +1,35 @@
+.new_workspace_wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.new_workspace_card {
+    width: 500px !important;
+}
+
+.color_wrapper {
+    margin: 0 0 1em;
+}
+
+.color_circle {
+    width: 36px;
+    height: 36px;
+    color: #ffffff !important;
+    border-radius: 10em;
+    padding: .78571429em .78571429em .78571429em !important;
+}
+
+.color_circle:first {
+    margin-left: 0;
+}
+
+.color_circle_label {
+    display: block;
+    margin: 0 0 .28571429rem 0;
+    color: rgba(0, 0, 0, .87);
+    font-size: .92857143em;
+    font-weight: 700;
+    text-transform: none;
+}
