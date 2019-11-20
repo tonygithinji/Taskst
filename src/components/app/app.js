@@ -11,7 +11,7 @@ import ProtectedRoute from "../../routes/protected.route";
 import Login from "../login";
 import Register from "../register";
 import Workspaces from "../workspaces";
-import NewWorkspace from "../new.workspace";
+import NewWorkspace from "../workspace.new";
 
 class App extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { Header, Card } from "semantic-ui-react";
-import NewWorkspaceForm from "./forms/new.workspace.form";
+import NewWorkspaceForm from "./forms/workspace.new.form";
 import styles from "./new_workspace.module.css";
 import { addWorkspace } from "../../redux/actions/workspace";
 
