@@ -8,10 +8,12 @@ const Workspace = ({ workspace, empty }) => {
     return (
         <React.Fragment>
             {!empty && (
-                <Segment textAlign="center" style={{ margin: "12px 0" }}>
-                    <div className={styles.icon} style={{ backgroundColor: workspace.color }}>{workspace.name.slice(0, 1)}</div>
-                    <Header as="h4" className={styles.title}>{workspace.name}</Header>
-                </Segment>
+                <Link to={`/workspaces/${workspace._id}/overview`}>
+                    <Segment textAlign="center" style={{ margin: "12px 0" }}>
+                        <div className={styles.icon} style={{ backgroundColor: workspace.color }}>{workspace.name.slice(0, 1)}</div>
+                        <Header as="h4" className={styles.title}>{workspace.name}</Header>
+                    </Segment>
+                </Link>
             )}
 
             {empty && (
@@ -33,7 +35,8 @@ const Workspace = ({ workspace, empty }) => {
 Workspace.propTypes = {
     workspace: PropTypes.shape({
         name: PropTypes.string,
-        color: PropTypes.string
+        color: PropTypes.string,
+        _id: PropTypes.string.isRequired
     }).isRequired,
     empty: PropTypes.bool.isRequired
 }

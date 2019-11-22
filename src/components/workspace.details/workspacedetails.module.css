@@ -1,0 +1,20 @@
+.sidebar_wrapper {
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+}
+
+.content_wrapper {
+    background-color: #EDEFF2;
+    padding-bottom: 0 !important;
+}
+
+.banner {
+    background-color: #565682 !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    padding: 1em 3em !important;
+}
+
+.banner h2 {
+    color: #fff !important;
+}
