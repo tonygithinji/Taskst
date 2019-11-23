@@ -13,6 +13,7 @@ import Register from "../register";
 import Workspaces from "../workspaces";
 import NewWorkspace from "../workspace.new";
 import WorkspaceDetails from "../workspace.details";
+import WorkspaceProjects from "../workspace.projects";
 
 class App extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class App extends Component {
             <ProtectedRoute exact path="/workspaces" component={Workspaces} />
             <ProtectedRoute exact path="/workspaces/new" component={NewWorkspace} />
             <ProtectedRoute exact path="/workspaces/:id/overview" component={WorkspaceDetails} />
+            <ProtectedRoute exact path="/workspaces/:id/projects" component={WorkspaceProjects} />
           </Switch>
         )}
 

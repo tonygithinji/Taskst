@@ -1,0 +1,55 @@
+.project_wrapper {
+    display: flex;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+
+.project_icon {
+    flex-shrink: 0;
+    margin: 0 20px 0 10px;
+    cursor: pointer;
+}
+
+.project_content {
+    flex: 1;
+}
+
+.project_header {
+    display: flex;
+    cursor: pointer;
+}
+
+.project_body {
+    margin: 8px 0 6px;
+    padding-right: 8px;
+}
+
+.stats_bar {
+    height: 4px;
+    background-color: #EEF2F6;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.progress_bar {
+    composes: stats_bar;
+    background-color: #87BAF4;
+    z-index: 9;
+    width: 20%;
+}
+
+.metadata {
+    color: #85868a;
+}
+
+.metadata>span {
+    padding: 0 10px;
+}
+
+.metadata span:first-child {
+    padding-left: 0;
+}
+
+.metadata span:last-child {
+    padding-right: 0;
+}

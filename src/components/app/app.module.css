@@ -2,3 +2,7 @@
   height: 100vh;
   width: 100%;
 }
+
+:global .border_radius_12 {
+  border-radius: 12px !important;
+}

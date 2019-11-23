@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import { Dropdown, Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import styles from "./sidebar.module.css";
@@ -27,8 +28,12 @@ const Sidebar = ({ user }) => {
             </div>
             <div>
                 <ul className={styles.menu}>
-                    <li className={styles.menu_item_active}>Overview</li>
-                    <li className={styles.menu_item}>Projects</li>
+                    <li className={styles.menu_item_active}>
+                        <Link to="overview">Overview</Link>
+                    </li>
+                    <li className={styles.menu_item}>
+                        <Link to="projects">Projects</Link>
+                    </li>
                     <li className={styles.menu_item}>Starred</li>
                     <li className={styles.menu_item}>Labels</li>
                 </ul>
