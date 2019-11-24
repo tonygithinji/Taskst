@@ -1,4 +1,4 @@
-import { WORKSPACES_RECEIVED } from "../types";
+import { WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
 import api from "../../api";
 
 export const workspacesReceived = (data) => {
@@ -24,5 +24,12 @@ export const fetchWorkspaces = () => {
 export const addWorkspace = (data) => {
     return () => {
         return api.workspace.addWorkspace(data);
+    }
+};
+
+export const activateWorkspace = workspaceId => {
+    return {
+        type: ACTIVATE_WORKSPACE,
+        payload: workspaceId
     }
 };

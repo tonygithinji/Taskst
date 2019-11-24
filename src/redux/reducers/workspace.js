@@ -1,4 +1,4 @@
-import { WORKSPACES_RECEIVED } from "../types";
+import { WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
 
 const initialState = {
     loading: false,
@@ -17,6 +17,11 @@ const workspaceReducer = (state = initialState, action) => {
                 ...state,
                 workspaces: action.payload,
                 loading: false
+            }
+        case ACTIVATE_WORKSPACE:
+            return {
+                ...state,
+                activeWorkspace: action.payload
             }
         default:
             return state;
