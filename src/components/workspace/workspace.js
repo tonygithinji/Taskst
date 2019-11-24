@@ -10,6 +10,7 @@ import Sidebar from "../sidebar";
 import Overview from "./overview";
 import Projects from "./projects";
 import ProjectTasks from "../project.tasks";
+import NewProject from "../project.new";
 
 class Workspace extends Component {
     state = {};
@@ -23,24 +24,27 @@ class Workspace extends Component {
         const { user } = this.props;
 
         return (
-            <Grid columns="equal">
-                <Grid.Column className={styles.sidebar_wrapper}>
-                    <Sidebar />
-                </Grid.Column>
-                <Grid.Column width={12} className={styles.content_wrapper}>
-                    <Switch>
-                        <Route path={`${this.props.match.url}/overview`}>
-                            <Overview user={user} />
-                        </Route>
-                        <Route exact path={`${this.props.match.url}/projects`}>
-                            <Projects />
-                        </Route>
-                        <Route path={`${this.props.match.url}/projects/:id/tasks`}>
-                            <ProjectTasks />
-                        </Route>
-                    </Switch>
-                </Grid.Column>
-            </Grid>
+            <React.Fragment>
+                <Grid columns="equal">
+                    <Grid.Column className={styles.sidebar_wrapper}>
+                        <Sidebar />
+                    </Grid.Column>
+                    <Grid.Column width={12} className={styles.content_wrapper}>
+                        <Switch>
+                            <Route path={`${this.props.match.url}/overview`}>
+                                <Overview user={user} />
+                            </Route>
+                            <Route exact path={`${this.props.match.url}/projects`}>
+                                <Projects />
+                            </Route>
+                            <Route path={`${this.props.match.url}/projects/:id/tasks`}>
+                                <ProjectTasks />
+                            </Route>
+                        </Switch>
+                    </Grid.Column>
+                </Grid>
+                <NewProject />
+            </React.Fragment>
         )
     }
 }

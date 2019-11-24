@@ -12,10 +12,7 @@ import Login from "../login";
 import Register from "../register";
 import Workspaces from "../workspaces";
 import NewWorkspace from "../workspace.new";
-import WorkspaceDetails from "../workspace.details";
 import Workspace from "../workspace";
-import WorkspaceProjects from "../workspace.projects";
-import ProjectTasks from "../project.tasks";
 
 class App extends Component {
   constructor(props) {

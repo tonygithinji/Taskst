@@ -1,13 +1,13 @@
-import { WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
 
 const initialState = {
     loading: false,
-    workspaces: []
+    workspaces: {}
 }
 
 const workspaceReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "LOADING_WORKSPACES":
+        case LOADING_WORKSPACES:
             return {
                 ...state,
                 loading: true

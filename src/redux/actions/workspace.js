@@ -1,4 +1,4 @@
-import { WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
 import api from "../../api";
 
 export const workspacesReceived = (data) => {
@@ -10,7 +10,7 @@ export const workspacesReceived = (data) => {
 
 export const loadingWorkspaces = () => {
     return {
-        type: "LOADING_WORKSPACES"
+        type: LOADING_WORKSPACES
     }
 }
 

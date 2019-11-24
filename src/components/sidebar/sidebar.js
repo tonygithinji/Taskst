@@ -4,10 +4,10 @@ import { NavLink, Link, useRouteMatch } from "react-router-dom";
 import { Dropdown, Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import styles from "./sidebar.module.css";
+import { toggleAddProjectModal } from "../../redux/actions/project";
 
-const Sidebar = ({ user, activeWorkspace }) => {
+const Sidebar = ({ user, activeWorkspace, toggleAddProjectModal }) => {
     const match = useRouteMatch();
-    console.log(match);
     const workspaces = [
         {
             key: "Workspace One",
@@ -15,6 +15,10 @@ const Sidebar = ({ user, activeWorkspace }) => {
             value: "Workspace One"
         }
     ];
+
+    const handleOnClick = () => {
+        toggleAddProjectModal(true);
+    }
 
     return (
         <div className={styles.sidebar}>
@@ -41,7 +45,7 @@ const Sidebar = ({ user, activeWorkspace }) => {
                 </ul>
             </div>
             <div className={styles.profile_wrapper}>
-                <Button primary fluid> <Icon name="add" />Add Project</Button>
+                <Button primary fluid onClick={handleOnClick}> <Icon name="add" />Add Project</Button>
                 <div className={styles.profile}>
                     <div className={styles.profile_icon}>{user.firstName.substring(0, 1)}</div>
                     <div className={styles.profile_name}>{user.firstName} {user.lastName}</div>
@@ -56,7 +60,12 @@ Sidebar.propTypes = {
         firstName: PropTypes.string.isRequired,
         lastName: PropTypes.string.isRequired
     }).isRequired,
-    activeWorkspace: PropTypes.string.isRequired
+    activeWorkspace: PropTypes.string,
+    toggleAddProjectModal: PropTypes.func.isRequired
+}
+
+Sidebar.defaultProps = {
+    activeWorkspace: ""
 }
 
 function mapStateToProps(state) {
@@ -66,4 +75,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, { toggleAddProjectModal })(Sidebar);
