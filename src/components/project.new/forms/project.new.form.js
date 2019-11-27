@@ -13,6 +13,7 @@ class NewProjectForm extends Component {
             data: {
                 name: ""
             },
+            valid: false,
             loading: false,
             errors: {}
         }
@@ -22,6 +23,11 @@ class NewProjectForm extends Component {
         this.setState({
             data: { ...this.state.data, [e.target.name]: e.target.value }
         });
+        if (e.target.value) {
+            this.setState({ valid: true });
+        } else {
+            this.setState({ valid: false });
+        }
     }
 
     handleOnSubmit = () => {
@@ -51,7 +57,7 @@ class NewProjectForm extends Component {
     }
 
     render() {
-        const { data, loading, errors } = this.state;
+        const { data, loading, errors, valid } = this.state;
 
         return (
             <Form loading={loading} onSubmit={this.handleOnSubmit}>
@@ -67,7 +73,7 @@ class NewProjectForm extends Component {
                     <input type="text" name="name" value={data.name} onChange={this.handleOnChange} />
                     {errors.name && <InlineMessage status="error" text={errors.name} />}
                 </Form.Field>
-                <Button primary disabled={loading} fluid>Create Project</Button>
+                <Button primary disabled={loading || !valid} fluid>Create Project</Button>
                 <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
                     <a style={{ cursor: "pointer" }} onClick={this.props.closeModal}>Cancel</a>
                 </div>

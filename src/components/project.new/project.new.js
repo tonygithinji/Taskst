@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Portal, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import NewProjectForm from "./forms/project.new.form";
 import { addProject, toggleAddProjectModal } from "../../redux/actions/project";
 
 export class NewProject extends Component {
 
     submit = data => {
-        return this.props.addProject(data)
-            .then((projectId) => <Redirect to={`/workspaces/${this.props.activeWorkspace}/project/${projectId}/tasks`} />);
+        const newData = { ...data };
+        newData.workspaceId = this.props.activeWorkspace;
+        return this.props.addProject(newData)
+            .then(project => {
+                this.closeModal();
+                this.props.history.push(`/workspaces/${this.props.activeWorkspace}/projects/${project._id}/tasks`)
+            });
     }
 
     closeModal = () => {
@@ -47,7 +51,10 @@ NewProject.propTypes = {
     showModal: PropTypes.bool.isRequired,
     activeWorkspace: PropTypes.string,
     addProject: PropTypes.func.isRequired,
-    toggleAddProjectModal: PropTypes.func.isRequired
+    toggleAddProjectModal: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
 }
 
 NewProject.defaultProps = {

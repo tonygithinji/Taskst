@@ -10,37 +10,37 @@ export default function Project({ project }) {
 
     return (
         <Segment className="border_radius_12">
-            <Link to={`${match.url}/djtri/tasks`}>
-                <div className={styles.project_wrapper}>
-                    <div className={styles.project_icon}>
-                        <LetterBox color="87BAF4" letter="O" />
+            <div className={styles.project_wrapper}>
+                <div className={styles.project_icon}>
+                    <LetterBox color="87BAF4" letter={project.name.slice(0, 1)} />
+                </div>
+                <div className={styles.project_content}>
+                    <div className={styles.project_header}>
+                        <Link to={`${match.url}/${project._id}/tasks`} style={{ flex: 1, margin: 0 }}>
+                            <Header as="h2">{project.name}</Header>
+                        </Link>
+                        <div>
+                            <Dropdown icon="ellipsis vertical" direction="left" floating>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item icon="eye" text="View" />
+                                    <Dropdown.Item icon="check circle outline" text="Mark Complete" />
+                                    <Dropdown.Item icon="times" text="Delete" />
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
                     </div>
-                    <div className={styles.project_content}>
-                        <div className={styles.project_header}>
-                            <Header as="h2" style={{ flex: 1, margin: 0 }}>Project One</Header>
-                            <div>
-                                <Dropdown icon="ellipsis vertical" direction="left" floating>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item icon="eye" text="View" />
-                                        <Dropdown.Item icon="check circle outline" text="Mark Complete" />
-                                        <Dropdown.Item icon="times" text="Delete" />
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            </div>
+                    <div className={styles.project_body}>
+                        <div className={styles.stats_bar}>
+                            <div className={styles.progress_bar} />
                         </div>
-                        <div className={styles.project_body}>
-                            <div className={styles.stats_bar}>
-                                <div className={styles.progress_bar} />
-                            </div>
-                        </div>
-                        <div className={styles.metadata}>
-                            <span><Icon name="history" />Created on Sep 12</span>
-                            <span><Icon name="calendar" /> 10 tasks</span>
-                            <span><Icon name="check circle outline" /> 20% complete</span>
-                        </div>
+                    </div>
+                    <div className={styles.metadata}>
+                        <span><Icon name="history" />Created on {project.createdAt}</span>
+                        <span><Icon name="calendar" /> {project.tasks_num} tasks</span>
+                        <span><Icon name="check circle outline" /> 20% complete</span>
                     </div>
                 </div>
-            </Link>
+            </div>
         </Segment>
     )
 }
@@ -48,7 +48,9 @@ export default function Project({ project }) {
 Project.propTypes = {
     project: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        tasks: PropTypes.number.isRequired,
-        completedTasks: PropTypes.number.isRequired
+        tasks_num: PropTypes.number.isRequired,
+        completedTasks: PropTypes.number.isRequired,
+        createdAt: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired
     }).isRequired,
 }

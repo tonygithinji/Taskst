@@ -1,7 +1,7 @@
 import { LOADING_PROJECTS, PROJECTS_RECEIVED, TOGGLE_SHOW_ADD_PROJECT_MODAL } from "../types";
 import api from "../../api";
 
-export const workspacesReceived = (data) => {
+export const projectsReceived = (data) => {
     return {
         type: PROJECTS_RECEIVED,
         payload: data

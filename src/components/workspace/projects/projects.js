@@ -6,9 +6,21 @@ import PropTypes from 'prop-types';
 import styles from "./projects.module.css";
 import Project from "./project";
 import noProjects from "../../../assets/images/no_projects.svg";
-import { toggleAddProjectModal } from "../../../redux/actions/project";
+import { toggleAddProjectModal, fetchProjects, projectsReceived } from "../../../redux/actions/project";
 
 class Projects extends Component {
+
+    componentDidMount() {
+        this.props.fetchProjects(this.props.workspaceId)
+            .then(data => {
+                const projects = {};
+                data.forEach(project => {
+                    projects[project._id] = project;
+                });
+
+                this.props.projectsReceived(projects);
+            });
+    }
 
     handleOnClick = () => {
         this.props.toggleAddProjectModal(true);
@@ -61,8 +73,7 @@ class Projects extends Component {
                         </div>
 
                         <div>
-                            <Project />
-                            <Project />
+                            {projects.map(project => <Project project={project} />)}
                         </div>
                     </React.Fragment>
                 )}
@@ -84,7 +95,10 @@ class Projects extends Component {
 Projects.propTypes = {
     projects: PropTypes.arrayOf([]).isRequired,
     loading: PropTypes.bool.isRequired,
-    toggleAddProjectModal: PropTypes.func.isRequired
+    toggleAddProjectModal: PropTypes.func.isRequired,
+    fetchProjects: PropTypes.func.isRequired,
+    projectsReceived: PropTypes.func.isRequired,
+    workspaceId: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state) {
@@ -94,4 +108,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { toggleAddProjectModal })(Projects);
+export default connect(mapStateToProps, { toggleAddProjectModal, fetchProjects, projectsReceived })(Projects);

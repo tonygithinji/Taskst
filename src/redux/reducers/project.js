@@ -13,6 +13,12 @@ const projectReducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             };
+        case PROJECTS_RECEIVED:
+            return {
+                ...state,
+                projects: action.payload,
+                loading: false
+            };
         case TOGGLE_SHOW_ADD_PROJECT_MODAL:
             return {
                 ...state,

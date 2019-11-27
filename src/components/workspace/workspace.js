@@ -35,15 +35,15 @@ class Workspace extends Component {
                                 <Overview user={user} />
                             </Route>
                             <Route exact path={`${this.props.match.url}/projects`}>
-                                <Projects />
+                                <Projects workspaceId={this.props.match.params.id} />
                             </Route>
-                            <Route path={`${this.props.match.url}/projects/:id/tasks`}>
+                            <Route exact path={`${this.props.match.url}/projects/:id/tasks`}>
                                 <ProjectTasks />
                             </Route>
                         </Switch>
                     </Grid.Column>
                 </Grid>
-                <NewProject />
+                <NewProject history={this.props.history} />
             </React.Fragment>
         )
     }
@@ -60,7 +60,8 @@ Workspace.propTypes = {
             id: PropTypes.string.isRequired
         }).isRequired,
         url: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    history: PropTypes.shape({}).isRequired,
 }
 
 function mapStateToProps(state) {
