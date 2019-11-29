@@ -3,20 +3,21 @@ import PropTypes from 'prop-types';
 import { Segment, Checkbox } from "semantic-ui-react";
 import styles from "./task.module.css";
 
-export default function Task({ task, completed }) {
+export default function Task({ task }) {
     return (
-        <Segment className="border_radius_12">
+        <Segment className={`border_radius_12 ${styles.task_segment}`}>
             <div className={styles.task_wrapper}>
                 <div className={styles.task_checkbox}>
-                    <Checkbox label='Make my profile visible' defaultChecked={completed} />
+                    <Checkbox label={task.task} defaultChecked={task.complete} className={styles.task_label} />
                 </div>
-                <div className={styles.task_title}>{task}</div>
             </div>
         </Segment>
     )
 }
 
 Task.propTypes = {
-    task: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
+    task: PropTypes.shape({
+        task: PropTypes.string.isRequired,
+        complete: PropTypes.bool.isRequired
+    }).isRequired,
 }

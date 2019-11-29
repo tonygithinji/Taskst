@@ -5,39 +5,74 @@ import PropTypes from 'prop-types';
 
 import styles from "./projecttasks.module.css";
 import Task from "./task";
-import { fetchTasks, tasksReceived } from "../../redux/actions/task";
+import { fetchTasks, tasksReceived, addTask } from "../../redux/actions/task";
+import { activateProject } from "../../redux/actions/project";
 import noTasks from "../../assets/images/no_tasks.svg";
+import AddTaskForm from "./forms/add-task";
 
 class ProjectTasks extends Component {
-    state = {};
+    state = {
+        addFirstTask: false,
+        showAddTask: false
+    };
 
     componentDidMount() {
+        this.fetchTasks();
+    }
+
+    fetchTasks = () => {
         this.props.fetchTasks(this.props.match.params.id)
             .then(data => {
                 const tasks = {};
-                data.forEach(task => {
+                data.tasks.forEach(task => {
                     tasks[task._id] = task;
                 });
 
                 this.props.tasksReceived(tasks);
+                this.props.activateProject(data.project);
             });
     }
 
-    handleOnClick = () => {
-        console.log("CLICKED");
+    handleAddFirstTask = () => {
+        this.setState({ addFirstTask: true });
+    }
+
+    handleAddTask = () => {
+        this.setState({ showAddTask: true });
+    }
+
+    cancelAddFirstTask = () => {
+        this.setState({ addFirstTask: false });
+    }
+
+    cancelAddTask = () => {
+        this.setState({ showAddTask: false });
+    }
+
+    doAddTask = data => {
+        const newData = { ...data };
+        newData.workspaceId = this.props.project.workspaceId;
+        newData.projectId = this.props.match.params.id;
+        return this.props.addTask(newData)
+            .then(() => this.fetchTasks());
     }
 
     render() {
-        const { loading, tasks } = this.props;
+        const { loading, tasks, project } = this.props;
+        const { showAddTask, addFirstTask } = this.state;
+
         return (
             <React.Fragment>
                 {loading && <Loader active size="big" />}
 
-                {!loading && tasks.length > 0 && (
+                {!loading && (
+                    <div style={{ paddingTop: 16 }}>
+                        <Header as='h1'>{project ? project.name : ""}</Header>
+                    </div>
+                )}
+
+                {!loading && tasks.length > 0 && !addFirstTask && (
                     <React.Fragment>
-                        <div style={{ paddingTop: 16 }}>
-                            <Header as='h1'>Project One</Header>
-                        </div>
                         <Segment className={styles.banner}>
                             <Grid columns="equal">
                                 <Grid.Column>
@@ -69,27 +104,35 @@ class ProjectTasks extends Component {
 
                         <div className={styles.tasks_header}>
                             <Header as='h2' className={styles.tasks_header_h2}>Tasks</Header>
-                            <div>
-                                <Button basic>Add Task</Button>
-                            </div>
                         </div>
 
                         <div>
-                            <Task />
-                            <Task />
+                            {tasks.map(task => <Task key={task._id} task={task} />)}
+                            {showAddTask && <div><AddTaskForm cancel={this.cancelAddTask} addTask={this.doAddTask} /></div>}
+                            {!showAddTask && (
+                                <div>
+                                    <Button basic onClick={this.handleAddTask}>
+                                        <Icon name="plus" /> Add Task
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </React.Fragment>
                 )}
 
-                {!loading && tasks.length === 0 && (
+                {!loading && tasks.length === 0 && !addFirstTask && (
+                    <div style={{ marginTop: "20em", textAlign: "center" }}>
+                        <Image src={noTasks} centered size="medium" />
+                        <Header as="h4">Add a task to get started!</Header>
+                        <Button primary onClick={this.handleAddFirstTask}> <Icon name="add" />Add a Task</Button>
+                    </div>
+                )}
+
+                {addFirstTask && (
                     <React.Fragment>
-                        <div style={{ paddingTop: 16 }}>
-                            <Header as='h1'>Project One</Header>
-                        </div>
-                        <div style={{ marginTop: "20em", textAlign: "center" }}>
-                            <Image src={noTasks} centered size="medium" />
-                            <Header as="h4">Add a task to get started!</Header>
-                            <Button primary onClick={this.handleOnClick}> <Icon name="add" />Add a Task</Button>
+                        <div style={{ margin: "20em auto 0 auto", textAlign: "center", maxWidth: "50em" }}>
+                            <Header as="h2">Add a task</Header>
+                            <AddTaskForm cancel={this.cancelAddFirstTask} addTask={this.doAddTask} />
                         </div>
                     </React.Fragment>
                 )}
@@ -103,18 +146,25 @@ ProjectTasks.propTypes = {
     loading: PropTypes.bool.isRequired,
     fetchTasks: PropTypes.func.isRequired,
     tasksReceived: PropTypes.func.isRequired,
+    activateProject: PropTypes.func.isRequired,
     match: PropTypes.shape({
         params: PropTypes.shape({
             id: PropTypes.string.isRequired
         }).isRequired
-    }).isRequired
+    }).isRequired,
+    project: PropTypes.shape({
+        name: PropTypes.string,
+        workspaceId: PropTypes.string
+    }).isRequired,
+    addTask: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
     return {
         tasks: Object.values(state.task.tasks),
-        loading: state.task.loading
+        loading: state.task.loading,
+        project: state.project.activeProject
     }
 }
 
-export default connect(mapStateToProps, { fetchTasks, tasksReceived })(ProjectTasks);
+export default connect(mapStateToProps, { fetchTasks, tasksReceived, activateProject, addTask })(ProjectTasks);

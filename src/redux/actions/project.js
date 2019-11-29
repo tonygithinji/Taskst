@@ -1,4 +1,4 @@
-import { LOADING_PROJECTS, PROJECTS_RECEIVED, TOGGLE_SHOW_ADD_PROJECT_MODAL } from "../types";
+import { LOADING_PROJECTS, PROJECTS_RECEIVED, TOGGLE_SHOW_ADD_PROJECT_MODAL, ACTIVE_PROJECT } from "../types";
 import api from "../../api";
 
 export const projectsReceived = (data) => {
@@ -33,3 +33,10 @@ export const toggleAddProjectModal = toggle => {
         payload: toggle
     }
 }
+
+export const activateProject = project => {
+    return {
+        type: ACTIVE_PROJECT,
+        payload: project
+    }
+};

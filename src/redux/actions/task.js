@@ -20,3 +20,9 @@ export const tasksReceived = data => {
         payload: data
     }
 }
+
+export const addTask = data => {
+    return () => {
+        return api.task.addTask(data);
+    }
+}

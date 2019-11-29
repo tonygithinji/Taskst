@@ -1,9 +1,10 @@
-import { LOADING_PROJECTS, PROJECTS_RECEIVED, TOGGLE_SHOW_ADD_PROJECT_MODAL } from "../types";
+import { LOADING_PROJECTS, PROJECTS_RECEIVED, TOGGLE_SHOW_ADD_PROJECT_MODAL, ACTIVE_PROJECT } from "../types";
 
 const initialState = {
     loading: false,
     projects: {},
-    showAddProjectModal: false
+    showAddProjectModal: false,
+    activeProject: {}
 }
 
 const projectReducer = (state = initialState, action) => {
@@ -24,6 +25,11 @@ const projectReducer = (state = initialState, action) => {
                 ...state,
                 showAddProjectModal: action.payload
             };
+        case ACTIVE_PROJECT:
+            return {
+                ...state,
+                activeProject: action.payload
+            }
         default:
             return state;
     }

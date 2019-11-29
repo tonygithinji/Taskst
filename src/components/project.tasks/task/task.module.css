@@ -1,3 +1,12 @@
-.tasks_header{
+.tasks_header {
     padding-top: 16px;
+}
+
+.task_segment {
+    padding-top: 1.4em !important;
+    padding-bottom: 1.4em !important;
+}
+
+.task_label {
+    font-size: 1.2em !important;
 }
