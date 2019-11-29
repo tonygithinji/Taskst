@@ -50,3 +50,14 @@
     background-color: #565682;
     color: #ffffff;
 }
+
+.tasks_header {
+    display: flex;
+    margin: 30px 0 12px;
+}
+
+.tasks_header_h2 {
+    flex: 1;
+    margin-bottom: 0 !important;
+    margin-top: 2px !important;
+}

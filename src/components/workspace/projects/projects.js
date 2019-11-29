@@ -73,7 +73,7 @@ class Projects extends Component {
                         </div>
 
                         <div>
-                            {projects.map(project => <Project project={project} />)}
+                            {projects.map(project => <Project key={project._id} project={project} />)}
                         </div>
                     </React.Fragment>
                 )}
