@@ -36,7 +36,7 @@ export default function Project({ project }) {
                     </div>
                     <div className={styles.metadata}>
                         <span><Icon name="history" />Created on {project.createdAt}</span>
-                        <span><Icon name="calendar" /> {project.tasks_num} tasks</span>
+                        <span><Icon name="calendar" /> {project.tasksNumber} tasks</span>
                         <span><Icon name="check circle outline" /> 20% complete</span>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ export default function Project({ project }) {
 Project.propTypes = {
     project: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        tasks_num: PropTypes.number.isRequired,
+        tasksNumber: PropTypes.number.isRequired,
         completedTasks: PropTypes.number.isRequired,
         createdAt: PropTypes.string.isRequired,
         _id: PropTypes.string.isRequired

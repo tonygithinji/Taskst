@@ -9,11 +9,11 @@ export class NewProject extends Component {
 
     submit = data => {
         const newData = { ...data };
-        newData.workspaceId = this.props.activeWorkspace;
+        newData.workspaceId = this.props.selectedWorkspace._id;
         return this.props.addProject(newData)
             .then(project => {
                 this.closeModal();
-                this.props.history.push(`/workspaces/${this.props.activeWorkspace}/projects/${project._id}/tasks`)
+                this.props.history.push(`/workspaces/${this.props.selectedWorkspace._id}/projects/${project._id}/tasks`)
             });
     }
 
@@ -43,22 +43,21 @@ export class NewProject extends Component {
 function mapStateToProps(state) {
     return {
         showModal: state.project.showAddProjectModal,
-        activeWorkspace: state.workspace.activeWorkspace
+        selectedWorkspace: state.workspace.selectedWorkspace
     }
 }
 
 NewProject.propTypes = {
     showModal: PropTypes.bool.isRequired,
-    activeWorkspace: PropTypes.string,
     addProject: PropTypes.func.isRequired,
     toggleAddProjectModal: PropTypes.func.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired,
-}
-
-NewProject.defaultProps = {
-    activeWorkspace: ""
+    selectedWorkspace: PropTypes.shape({
+        name: PropTypes.string,
+        _id: PropTypes.string
+    }).isRequired,
 }
 
 export default connect(mapStateToProps, { addProject, toggleAddProjectModal })(NewProject)

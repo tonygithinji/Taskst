@@ -93,7 +93,7 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
-    projects: PropTypes.arrayOf([]).isRequired,
+    projects: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     loading: PropTypes.bool.isRequired,
     toggleAddProjectModal: PropTypes.func.isRequired,
     fetchProjects: PropTypes.func.isRequired,

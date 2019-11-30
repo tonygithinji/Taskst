@@ -4,16 +4,14 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import styles from "./workspace.module.css";
 
-const Workspace = ({ workspace, empty }) => {
+const Workspace = ({ workspace, empty, goToWorkspace }) => {
     return (
         <React.Fragment>
             {!empty && (
-                <Link to={`/workspaces/${workspace._id}/overview`}>
-                    <Segment textAlign="center" style={{ margin: "12px 0" }}>
-                        <div className={styles.icon} style={{ backgroundColor: workspace.color }}>{workspace.name.slice(0, 1)}</div>
-                        <Header as="h4" className={styles.title}>{workspace.name}</Header>
-                    </Segment>
-                </Link>
+                <Segment textAlign="center" style={{ margin: "12px 0", cursor: "pointer" }} onClick={() => goToWorkspace(workspace)}>
+                    <div className={styles.icon} style={{ backgroundColor: workspace.color }}>{workspace.name.slice(0, 1)}</div>
+                    <Header as="h4" className={styles.title}>{workspace.name}</Header>
+                </Segment>
             )}
 
             {empty && (
@@ -35,10 +33,14 @@ const Workspace = ({ workspace, empty }) => {
 Workspace.propTypes = {
     workspace: PropTypes.shape({
         name: PropTypes.string,
-        color: PropTypes.string,
-        _id: PropTypes.string.isRequired
+        color: PropTypes.string
     }).isRequired,
-    empty: PropTypes.bool.isRequired
+    empty: PropTypes.bool.isRequired,
+    goToWorkspace: PropTypes.func
+}
+
+Workspace.defaultProps = {
+    goToWorkspace: () => { }
 }
 
 export default Workspace;

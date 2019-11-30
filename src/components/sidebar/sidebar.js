@@ -1,44 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, Link, useRouteMatch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Dropdown, Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import styles from "./sidebar.module.css";
-import { toggleAddProjectModal } from "../../redux/actions/project";
+import * as actions from "../../redux/actions/project";
 
-const Sidebar = ({ user, activeWorkspace, toggleAddProjectModal }) => {
-    const match = useRouteMatch();
-    const workspaces = [
-        {
-            key: "Workspace One",
-            text: "Workspace One",
-            value: "Workspace One"
-        }
-    ];
+const Sidebar = ({ user, toggleAddProjectModal, history, selectedWorkspace }) => {
 
     const handleOnClick = () => {
         toggleAddProjectModal(true);
+    }
+
+    const handleSwitchWorkspaces = () => {
+        history.push("/workspaces");
+    }
+
+    const handleNewWorkspace = () => {
+        history.push("/workspaces/new");
     }
 
     return (
         <div className={styles.sidebar}>
             <div style={{ paddingTop: 18, marginBottom: 60 }}>
                 <div className={styles.workspace_switcher}>
-                    <Dropdown
-                        className="custom_dropdown"
-                        selection
-                        options={workspaces}
-                        defaultValue={workspaces[0].value}
-                        fluid />
+                    <Dropdown text={selectedWorkspace.name} className="custom_dropdown" fluid>
+                        <Dropdown.Menu>
+                            <Dropdown.Item icon="exchange" text="Switch Workspaces" onClick={handleSwitchWorkspaces} />
+                            <Dropdown.Item icon="plus" text="New Workspace" onClick={handleNewWorkspace} />
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </div>
             <div>
                 <ul className={styles.menu}>
-                    <li className={styles.menu_item}>
-                        <Link to={`/workspaces/${activeWorkspace}/overview`}>Overview</Link >
+                    <li>
+                        <NavLink to={`/workspaces/${selectedWorkspace._id}/overview`} activeClassName="menu_item_active" className={styles.menu_item}>Overview</NavLink >
                     </li>
-                    <li className={styles.menu_item}>
-                        <NavLink to={`/workspaces/${activeWorkspace}/projects`} activeClassName="menu_item_active">Projects</NavLink >
+                    <li>
+                        <NavLink to={`/workspaces/${selectedWorkspace._id}/projects`} activeClassName="menu_item_active" className={styles.menu_item}>Projects</NavLink >
                     </li>
                     <li className={styles.menu_item}>Starred</li>
                     <li className={styles.menu_item}>Labels</li>
@@ -60,8 +60,14 @@ Sidebar.propTypes = {
         firstName: PropTypes.string.isRequired,
         lastName: PropTypes.string.isRequired
     }).isRequired,
-    activeWorkspace: PropTypes.string,
-    toggleAddProjectModal: PropTypes.func.isRequired
+    toggleAddProjectModal: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
+    selectedWorkspace: PropTypes.shape({
+        name: PropTypes.string,
+        _id: PropTypes.string
+    }).isRequired,
 }
 
 Sidebar.defaultProps = {
@@ -71,8 +77,8 @@ Sidebar.defaultProps = {
 function mapStateToProps(state) {
     return {
         user: state.auth.user,
-        activeWorkspace: state.workspace.activeWorkspace
+        selectedWorkspace: state.workspace.selectedWorkspace
     }
 }
 
-export default connect(mapStateToProps, { toggleAddProjectModal })(Sidebar);
+export default connect(mapStateToProps, { toggleAddProjectModal: actions.toggleAddProjectModal })(Sidebar);

@@ -1,4 +1,4 @@
-import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE } from "../types";
 import api from "../../api";
 
 export const workspacesReceived = (data) => {
@@ -27,9 +27,15 @@ export const addWorkspace = (data) => {
     }
 };
 
-export const activateWorkspace = workspaceId => {
+export const setSelectedWorkspace = workspace => {
     return {
-        type: ACTIVATE_WORKSPACE,
-        payload: workspaceId
+        type: SET_SELECTED_WORKSPACE,
+        payload: workspace
+    }
+};
+
+export const activateWorkspace = workspaceId => {
+    return dispatch => {
+        return api.workspace.getWorkspace(workspaceId).then(workspace => dispatch(setSelectedWorkspace(workspace)));
     }
 };

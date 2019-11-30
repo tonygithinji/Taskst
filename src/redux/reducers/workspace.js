@@ -1,8 +1,9 @@
-import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, ACTIVATE_WORKSPACE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE } from "../types";
 
 const initialState = {
     loading: false,
-    workspaces: {}
+    workspaces: {},
+    selectedWorkspace: {}
 }
 
 const workspaceReducer = (state = initialState, action) => {
@@ -18,10 +19,10 @@ const workspaceReducer = (state = initialState, action) => {
                 workspaces: action.payload,
                 loading: false
             }
-        case ACTIVATE_WORKSPACE:
+        case SET_SELECTED_WORKSPACE:
             return {
                 ...state,
-                activeWorkspace: action.payload
+                selectedWorkspace: action.payload
             }
         default:
             return state;

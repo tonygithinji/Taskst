@@ -27,7 +27,7 @@ class Workspace extends Component {
             <React.Fragment>
                 <Grid columns="equal">
                     <Grid.Column className={styles.sidebar_wrapper}>
-                        <Sidebar />
+                        <Sidebar history={this.props.history} />
                     </Grid.Column>
                     <Grid.Column width={12} className={styles.content_wrapper}>
                         <Switch>

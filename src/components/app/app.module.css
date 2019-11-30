@@ -6,3 +6,10 @@
 :global .border_radius_12 {
   border-radius: 12px !important;
 }
+
+:global .button_link {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-decoration: underline;
+}

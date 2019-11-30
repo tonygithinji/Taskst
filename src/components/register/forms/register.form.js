@@ -29,7 +29,7 @@ class RegisterForm extends Component {
 
     handleOnSubmit = () => {
         const errors = this.validate(this.state.data);
-        console.log(this.props);
+
         if (Object.keys(errors).length > 0) {
             this.setState({ errors });
         } else {

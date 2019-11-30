@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/aria-role */
 import React, { Component } from 'react';
 import { Form, Button, Message } from "semantic-ui-react";
 import PropTypes from 'prop-types';
@@ -17,6 +15,12 @@ class NewProjectForm extends Component {
             loading: false,
             errors: {}
         }
+
+        this.inputRef = React.createRef();
+    }
+
+    componentDidMount() {
+        this.inputRef.current.focus();
     }
 
     handleOnChange = e => {
@@ -70,12 +74,12 @@ class NewProjectForm extends Component {
 
                 <Form.Field>
                     <label htmlFor="name">Name</label>
-                    <input type="text" name="name" value={data.name} onChange={this.handleOnChange} />
+                    <input type="text" name="name" value={data.name} onChange={this.handleOnChange} ref={this.inputRef} />
                     {errors.name && <InlineMessage status="error" text={errors.name} />}
                 </Form.Field>
                 <Button primary disabled={loading || !valid} fluid>Create Project</Button>
                 <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
-                    <a style={{ cursor: "pointer" }} onClick={this.props.closeModal}>Cancel</a>
+                    <Button basic onClick={this.props.closeModal} className="button_link">Cancel</Button>
                 </div>
             </Form>
         );

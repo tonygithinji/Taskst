@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import { Header, Card } from "semantic-ui-react";
+import { Header, Card, Button } from "semantic-ui-react";
 import NewWorkspaceForm from "./forms/workspace.new.form";
 import styles from "./new_workspace.module.css";
 import { addWorkspace } from "../../redux/actions/workspace";
@@ -13,6 +13,10 @@ class NewWorkspace extends Component {
             .then(() => this.props.history.push("/workspaces"));
     }
 
+    cancelAddWorkspace = () => {
+        this.props.history.push("../../workspaces");
+    }
+
     render() {
         return (
             <div className={styles.new_workspace_wrapper}>
@@ -20,6 +24,9 @@ class NewWorkspace extends Component {
                 <Card centered className={styles.new_workspace_card}>
                     <Card.Content>
                         <NewWorkspaceForm submit={this.submit} />
+                        <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
+                            <Button basic onClick={this.cancelAddWorkspace} className="button_link">Cancel</Button>
+                        </div>
                     </Card.Content>
                 </Card>
             </div>

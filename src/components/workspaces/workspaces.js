@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Grid, Header, Loader } from "semantic-ui-react";
 import Workspace from "./workspace/workspace";
-import { fetchWorkspaces, workspacesReceived } from "../../redux/actions/workspace";
+import { fetchWorkspaces, workspacesReceived, setSelectedWorkspace } from "../../redux/actions/workspace";
 
 class Workspaces extends Component {
     constructor(props) {
@@ -25,6 +25,11 @@ class Workspaces extends Component {
             });
     }
 
+    goToWorkspace = workspace => {
+        this.props.setSelectedWorkspace(workspace);
+        this.props.history.push(`/workspaces/${workspace._id}/overview`);
+    }
+
     render() {
         const { workspaces, loading, user } = this.props;
         return (
@@ -42,7 +47,7 @@ class Workspaces extends Component {
 
                                 {workspaces.length > 0 && workspaces.map(workspace => (
                                     <Grid.Column key={workspace._id}>
-                                        <Workspace workspace={workspace} empty={false} />
+                                        <Workspace workspace={workspace} goToWorkspace={this.goToWorkspace} empty={false} />
                                     </Grid.Column>
                                 ))}
 
@@ -58,10 +63,14 @@ class Workspaces extends Component {
 Workspaces.propTypes = {
     fetchWorkspaces: PropTypes.func.isRequired,
     workspacesReceived: PropTypes.func.isRequired,
+    setSelectedWorkspace: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
-    workspaces: PropTypes.arrayOf([]).isRequired,
+    workspaces: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     user: PropTypes.shape({
         firstName: PropTypes.string.isRequired,
+    }).isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
     }).isRequired,
 }
 
@@ -73,4 +82,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { fetchWorkspaces, workspacesReceived })(Workspaces);
+export default connect(mapStateToProps, { fetchWorkspaces, workspacesReceived, setSelectedWorkspace })(Workspaces);

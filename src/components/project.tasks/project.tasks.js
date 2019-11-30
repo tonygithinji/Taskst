@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Header, Segment, Button, Loader, Image, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 import styles from "./projecttasks.module.css";
 import Task from "./task";
@@ -54,7 +55,10 @@ class ProjectTasks extends Component {
         newData.workspaceId = this.props.project.workspaceId;
         newData.projectId = this.props.match.params.id;
         return this.props.addTask(newData)
-            .then(() => this.fetchTasks());
+            .then(() => {
+                this.setState({ addFirstTask: false });
+                this.fetchTasks();
+            });
     }
 
     render() {
@@ -66,8 +70,11 @@ class ProjectTasks extends Component {
                 {loading && <Loader active size="big" />}
 
                 {!loading && (
-                    <div style={{ paddingTop: 16 }}>
-                        <Header as='h1'>{project ? project.name : ""}</Header>
+                    <div className={styles.header_wrapper}>
+                        <Link to="../../projects" className={styles.back_link}>
+                            <Icon name="angle left" size="big" />
+                        </Link>
+                        <Header as='h1' style={{ marginTop: 0 }}>{project ? project.name : ""}</Header>
                     </div>
                 )}
 
@@ -142,7 +149,7 @@ class ProjectTasks extends Component {
 }
 
 ProjectTasks.propTypes = {
-    tasks: PropTypes.arrayOf([]).isRequired,
+    tasks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     loading: PropTypes.bool.isRequired,
     fetchTasks: PropTypes.func.isRequired,
     tasksReceived: PropTypes.func.isRequired,
