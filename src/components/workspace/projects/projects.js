@@ -27,7 +27,7 @@ class Projects extends Component {
     }
 
     render() {
-        const { projects, loading } = this.props;
+        const { projects, loading, selectedWorkspace } = this.props;
 
         return (
             <React.Fragment>
@@ -38,34 +38,41 @@ class Projects extends Component {
                         <div style={{ paddingTop: 16 }}>
                             <Header as='h1'>Projects</Header>
                         </div>
-                        <Segment className={styles.banner}>
-                            <Grid columns="equal">
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>14</Header>
-                                        <div className={styles.stat_num}>Projects</div>
+                        <Grid columns="equal" style={{ marginTop: "0.4rem" }}>
+                            <Grid.Column>
+                                <Segment className={styles.banner}>
+                                    <div className={styles.stats_body}>
+                                        <Header as="h3" className={styles.stat_header}>{selectedWorkspace.projectsNumber}</Header>
+                                        <div className={styles.stat_num}>Project{selectedWorkspace.projectsNumber > 1 && "s"}</div>
                                     </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>78</Header>
-                                        <div className={styles.stat_num}>Tasks</div>
+                                    <div className={styles.stat_icon}>
+                                        <Icon name="clipboard" size="huge" />
                                     </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>78%</Header>
+                                </Segment>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Segment className={styles.banner}>
+                                    <div className={styles.stats_body}>
+                                        <Header as="h3" className={styles.stat_header}>{selectedWorkspace.tasksNumber}</Header>
+                                        <div className={styles.stat_num}>Task{selectedWorkspace.tasksNumber > 1 && "s"}</div>
+                                    </div>
+                                    <div className={styles.stat_icon}>
+                                        <Icon name="list ul" size="huge" />
+                                    </div>
+                                </Segment>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Segment className={styles.banner}>
+                                    <div className={styles.stats_body}>
+                                        <Header as="h3" className={styles.stat_header}>{Math.ceil((selectedWorkspace.completedTasks / (selectedWorkspace.tasksNumber || 1)) * 100)}%</Header>
                                         <div className={styles.stat_num}>Completed</div>
                                     </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>2%</Header>
-                                        <div className={styles.stat_num}>Overdue</div>
+                                    <div className={styles.stat_icon}>
+                                        <Icon name="clipboard check" size="huge" />
                                     </div>
-                                </Grid.Column>
-                            </Grid>
-                        </Segment>
+                                </Segment>
+                            </Grid.Column>
+                        </Grid>
 
                         <div className={styles.filter_wrapper}>
                             <span className={styles.filter_active}>Incomplete</span>
@@ -98,13 +105,19 @@ Projects.propTypes = {
     toggleAddProjectModal: PropTypes.func.isRequired,
     fetchProjects: PropTypes.func.isRequired,
     projectsReceived: PropTypes.func.isRequired,
-    workspaceId: PropTypes.string.isRequired
+    workspaceId: PropTypes.string.isRequired,
+    selectedWorkspace: PropTypes.shape({
+        projectsNumber: PropTypes.number,
+        tasksNumber: PropTypes.number,
+        completedTasks: PropTypes.number
+    }).isRequired,
 }
 
 function mapStateToProps(state) {
     return {
         projects: Object.values(state.project.projects),
-        loading: state.project.loading
+        loading: state.project.loading,
+        selectedWorkspace: state.workspace.selectedWorkspace
     }
 }
 

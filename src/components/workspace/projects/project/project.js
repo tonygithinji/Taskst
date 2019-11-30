@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { Link, useRouteMatch } from "react-router-dom";
 import { Segment, Header, Icon, Dropdown } from "semantic-ui-react";
+import * as moment from "moment";
 import styles from "./project.module.css";
 import LetterBox from "../../../utils/letter-box";
 
@@ -35,9 +36,12 @@ export default function Project({ project }) {
                         </div>
                     </div>
                     <div className={styles.metadata}>
-                        <span><Icon name="history" />Created on {project.createdAt}</span>
-                        <span><Icon name="calendar" /> {project.tasksNumber} tasks</span>
-                        <span><Icon name="check circle outline" /> 20% complete</span>
+                        <div style={{ flex: 1 }}>
+                            <span><Icon name="tasks" /> {project.tasksNumber} task{project.tasksNumber > 1 && "s"}</span>
+                            <span><Icon name="check circle outline" /> {Math.ceil((project.completedTasks / (project.tasksNumber || 1)) * 100)}% complete</span>
+                        </div>
+                        <span><Icon name="calendar" />Created on {moment(project.createdAt).format("d MMM YYYY")}</span>
+
                     </div>
                 </div>
             </div>
