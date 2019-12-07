@@ -1,4 +1,10 @@
-import { LOADING_PROJECTS, PROJECTS_RECEIVED, TOGGLE_SHOW_ADD_PROJECT_MODAL, ACTIVE_PROJECT } from "../types";
+import {
+    LOADING_PROJECTS,
+    PROJECTS_RECEIVED,
+    TOGGLE_SHOW_ADD_PROJECT_MODAL,
+    ACTIVE_PROJECT,
+    PROJECT_UPDATED
+} from "../types";
 import api from "../../api";
 
 export const projectsReceived = (data) => {
@@ -40,3 +46,16 @@ export const activateProject = project => {
         payload: project
     }
 };
+
+export const updateProject = data => {
+    return () => {
+        return api.project.updateProject(data)
+    }
+}
+
+export const projectUpdated = project => {
+    return {
+        type: PROJECT_UPDATED,
+        payload: project
+    }
+}

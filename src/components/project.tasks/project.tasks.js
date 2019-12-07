@@ -8,6 +8,7 @@ import styles from "./projecttasks.module.css";
 import Task from "./task";
 import { fetchTasks, tasksReceived, addTask } from "../../redux/actions/task";
 import { activateProject } from "../../redux/actions/project";
+import { activateWorkspace } from "../../redux/actions/workspace";
 import noTasks from "../../assets/images/no_tasks.svg";
 import AddTaskForm from "./forms/add-task";
 
@@ -57,6 +58,7 @@ class ProjectTasks extends Component {
         return this.props.addTask(newData)
             .then(() => {
                 this.setState({ addFirstTask: false });
+                this.props.activateWorkspace(this.props.project.workspaceId);
                 this.fetchTasks();
             });
     }
@@ -163,7 +165,8 @@ ProjectTasks.propTypes = {
         name: PropTypes.string,
         workspaceId: PropTypes.string
     }).isRequired,
-    addTask: PropTypes.func.isRequired
+    addTask: PropTypes.func.isRequired,
+    activateWorkspace: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -174,4 +177,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { fetchTasks, tasksReceived, activateProject, addTask })(ProjectTasks);
+export default connect(mapStateToProps, { fetchTasks, tasksReceived, activateProject, addTask, activateWorkspace })(ProjectTasks);

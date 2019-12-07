@@ -4,6 +4,7 @@ import { Portal, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 import NewProjectForm from "./forms/project.new.form";
 import { addProject, toggleAddProjectModal } from "../../redux/actions/project";
+import { activateWorkspace } from "../../redux/actions/workspace";
 
 export class NewProject extends Component {
 
@@ -13,6 +14,7 @@ export class NewProject extends Component {
         return this.props.addProject(newData)
             .then(project => {
                 this.closeModal();
+                this.props.activateWorkspace(this.props.selectedWorkspace._id);
                 this.props.history.push(`/workspaces/${this.props.selectedWorkspace._id}/projects/${project._id}/tasks`)
             });
     }
@@ -51,6 +53,7 @@ NewProject.propTypes = {
     showModal: PropTypes.bool.isRequired,
     addProject: PropTypes.func.isRequired,
     toggleAddProjectModal: PropTypes.func.isRequired,
+    activateWorkspace: PropTypes.func.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired,
@@ -60,4 +63,4 @@ NewProject.propTypes = {
     }).isRequired,
 }
 
-export default connect(mapStateToProps, { addProject, toggleAddProjectModal })(NewProject)
+export default connect(mapStateToProps, { addProject, toggleAddProjectModal, activateWorkspace })(NewProject)

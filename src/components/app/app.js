@@ -1,6 +1,6 @@
 /* eslint-disable react/no-did-mount-set-state */
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { Container, Loader } from "semantic-ui-react";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
@@ -41,14 +41,17 @@ class App extends Component {
 
         {!loading && (
           <Switch>
+            <Route path="/" exact>
+              <Redirect to="/workspaces" />
+            </Route>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <ProtectedRoute exact path="/workspaces" component={Workspaces} />
             <ProtectedRoute exact path="/workspaces/new" component={NewWorkspace} />
             <ProtectedRoute path="/workspaces/:id" component={Workspace} />
-            {/* <ProtectedRoute exact path="/workspaces/:id/overview" component={WorkspaceDetails} />
-            <ProtectedRoute exact path="/workspaces/:id/projects" component={WorkspaceProjects} />
-            <ProtectedRoute exact path="/workspaces/:workspaceId/projects/:projectId/tasks" component={ProjectTasks} /> */}
+            <Route path="*">
+              <Redirect to="/workspaces" />
+            </Route>
           </Switch>
         )}
 

@@ -6,7 +6,13 @@ import PropTypes from 'prop-types';
 import styles from "./projects.module.css";
 import Project from "./project";
 import noProjects from "../../../assets/images/no_projects.svg";
-import { toggleAddProjectModal, fetchProjects, projectsReceived } from "../../../redux/actions/project";
+import {
+    toggleAddProjectModal,
+    fetchProjects,
+    projectsReceived,
+    updateProject,
+    projectUpdated
+} from "../../../redux/actions/project";
 
 class Projects extends Component {
 
@@ -26,8 +32,15 @@ class Projects extends Component {
         this.props.toggleAddProjectModal(true);
     }
 
+    handleUpdateProjectName = data => {
+        return this.props.updateProject(data)
+            .then(project => {
+                this.props.projectUpdated(project);
+            });
+    }
+
     render() {
-        const { projects, loading, selectedWorkspace } = this.props;
+        const { projects, loading, selectedWorkspace, url } = this.props;
 
         return (
             <React.Fragment>
@@ -80,7 +93,15 @@ class Projects extends Component {
                         </div>
 
                         <div>
-                            {projects.map(project => <Project key={project._id} project={project} />)}
+                            {
+                                projects.map(project => <Project
+                                    key={project._id}
+                                    project={project}
+                                    url={url}
+                                    color={selectedWorkspace.color}
+                                    editProjectName={this.handleUpdateProjectName}
+                                />)
+                            }
                         </div>
                     </React.Fragment>
                 )}
@@ -109,8 +130,12 @@ Projects.propTypes = {
     selectedWorkspace: PropTypes.shape({
         projectsNumber: PropTypes.number,
         tasksNumber: PropTypes.number,
-        completedTasks: PropTypes.number
+        completedTasks: PropTypes.number,
+        color: PropTypes.string
     }).isRequired,
+    url: PropTypes.string.isRequired,
+    updateProject: PropTypes.func.isRequired,
+    projectUpdated: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -121,4 +146,10 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { toggleAddProjectModal, fetchProjects, projectsReceived })(Projects);
+export default connect(mapStateToProps, {
+    toggleAddProjectModal,
+    fetchProjects,
+    projectsReceived,
+    updateProject,
+    projectUpdated
+})(Projects);
