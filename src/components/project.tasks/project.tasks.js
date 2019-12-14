@@ -70,6 +70,14 @@ class ProjectTasks extends Component {
             });
     }
 
+    calculateDonutData = () => {
+        if (Object.keys(this.props.project).length > 0) {
+            const completed = Math.ceil((this.props.project.completedTasks / (this.props.project.tasksNumber || 1)) * 200);
+            return 200 - completed;
+        }
+        return 0;
+    }
+
     render() {
         const { loading, tasks, project } = this.props;
         const { showAddTask, addFirstTask } = this.state;
@@ -89,34 +97,48 @@ class ProjectTasks extends Component {
 
                 {!loading && tasks.length > 0 && !addFirstTask && (
                     <React.Fragment>
-                        <Segment className={styles.banner}>
-                            <Grid columns="equal">
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>10</Header>
+                        <Grid columns="equal" style={{ marginTop: "0.4rem" }}>
+                            <Grid.Column>
+                                <Segment className={styles.banner}>
+                                    <div className={styles.stats_body} style={{ marginBottom: "4px" }}>
+                                        <Header as="h3" className={styles.stat_header}>{project.tasksNumber}</Header>
                                         <div className={styles.stat_num}>Tasks</div>
                                     </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>20%</Header>
+                                    <div className={styles.stat_icon}>
+                                        <Icon name="list ul" size="huge" />
+                                    </div>
+                                </Segment>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Segment className={styles.banner}>
+                                    <div className={styles.stats_body} style={{ marginBottom: "4px" }}>
+                                        <Header as="h3" className={styles.stat_header}>{`${project.completedTasks}/${project.tasksNumber}`}</Header>
                                         <div className={styles.stat_num}>Completed</div>
                                     </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>2%</Header>
-                                        <div className={styles.stat_num}>Overdue</div>
+                                    <div className={styles.stat_icon}>
+                                        <Icon name="check circle outline" size="huge" />
                                     </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <div className={styles.stat_div}>
-                                        <Header as="h3" className={styles.stat_header}>0</Header>
-                                        <div className={styles.stat_num}>Upcoming</div>
+                                </Segment>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Segment className={styles.banner}>
+                                    <svg className={styles.svg} width="68" height="68" xmlns="http://www.w3.org/2000/svg">
+                                        <g>
+                                            <circle r="30" cy="34" cx="34" strokeWidth="6" stroke="#DCE1EE" fill="none" />
+                                            <circle className={styles.donut} style={{ strokeDashoffset: this.calculateDonutData() }} r="30" cy="34" cx="34" strokeWidth="6" stroke="#565682" fill="none" />
+                                        </g>
+                                    </svg>
+                                    <div className={styles.legend}>
+                                        <div>
+                                            <span className={styles.incomplete_legend_icon} /> Incomplete
+                                        </div>
+                                        <div>
+                                            <span className={styles.complete_legend_icon} /> Complete
+                                        </div>
                                     </div>
-                                </Grid.Column>
-                            </Grid>
-                        </Segment>
+                                </Segment>
+                            </Grid.Column>
+                        </Grid>
 
                         <div className={styles.tasks_header}>
                             <Header as='h2' className={styles.tasks_header_h2}>Tasks</Header>
@@ -170,7 +192,9 @@ ProjectTasks.propTypes = {
     }).isRequired,
     project: PropTypes.shape({
         name: PropTypes.string,
-        workspaceId: PropTypes.string
+        workspaceId: PropTypes.string,
+        tasksNumber: PropTypes.number,
+        completedTasks: PropTypes.number
     }).isRequired,
     addTask: PropTypes.func.isRequired,
     activateWorkspace: PropTypes.func.isRequired,

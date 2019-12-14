@@ -4,11 +4,6 @@
     align-items: center;
 }
 
-.banner {
-    border-radius: 12px !important;
-    margin-bottom: 10px !important;
-}
-
 .content_wrapper {
     background-color: #EDEFF2;
     padding-bottom: 0 !important;
@@ -28,14 +23,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.stat_header {
-    font-size: 2em !important;
-}
-
-.stat_num {
-    font-size: 1.2em !important;
 }
 
 .filter_wrapper {
@@ -59,7 +46,7 @@
 
 .tasks_header {
     display: flex;
-    margin: 30px 0 12px;
+    margin: 20px 0 12px;
 }
 
 .tasks_header_h2 {
@@ -75,4 +62,75 @@
     width: 36px;
     padding-top: 4px;
     margin-right: 10px;
+}
+
+.banner {
+    border-radius: 12px !important;
+    margin-bottom: 10px !important;
+    display: flex;
+}
+
+.stat_icon {
+    color: #565682;
+    margin-top: 6px;
+}
+
+.stats_body {
+    flex: 1;
+    padding-left: 1rem;
+}
+
+.stat_header {
+    font-size: 2em !important;
+}
+
+.stat_num {
+    font-size: 1.2em !important;
+}
+
+.svg {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.donut {
+    stroke-dasharray: 200;
+    -webkit-animation: donut 1s ease-out forwards;
+    animation: donut 1s ease-out forwards;
+}
+
+@-webkit-keyframes donut {
+    from {
+        stroke-dashoffset: 200;
+    }
+}
+
+@keyframes donut {
+    from {
+        stroke-dashoffset: 200;
+    }
+}
+
+.legend {
+    flex: 1;
+    align-self: center;
+    margin-left: 30px;
+}
+
+.legend_icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 6px;
+    display: inline-block;
+}
+
+.incomplete_legend_icon {
+    composes: legend_icon;
+    background-color: #DCE1EE;
+}
+
+.complete_legend_icon {
+    composes: legend_icon;
+    background-color: #565682;
 }
