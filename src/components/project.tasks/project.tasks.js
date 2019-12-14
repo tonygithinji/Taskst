@@ -19,11 +19,18 @@ class ProjectTasks extends Component {
     };
 
     componentDidMount() {
-        this.fetchTasks();
+        this.fetchTasks(this.props.match.params.id);
     }
 
-    fetchTasks = () => {
-        this.props.fetchTasks(this.props.match.params.id)
+    shouldComponentUpdate(nextProps) {
+        if (this.props.match.params.id !== nextProps.match.params.id) {
+            this.fetchTasks(nextProps.match.params.id);
+        }
+        return true;
+    }
+
+    fetchTasks = projectId => {
+        this.props.fetchTasks(projectId)
             .then(data => {
                 const tasks = {};
                 data.tasks.forEach(task => {
@@ -59,7 +66,7 @@ class ProjectTasks extends Component {
             .then(() => {
                 this.setState({ addFirstTask: false });
                 this.props.activateWorkspace(this.props.project.workspaceId);
-                this.fetchTasks();
+                this.fetchTasks(this.props.match.params.id);
             });
     }
 

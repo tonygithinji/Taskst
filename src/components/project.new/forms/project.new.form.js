@@ -79,7 +79,7 @@ class NewProjectForm extends Component {
                 </Form.Field>
                 <Button primary disabled={loading || !valid} fluid>Create Project</Button>
                 <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
-                    <Button basic onClick={this.props.closeModal} className="button_link">Cancel</Button>
+                    <Button basic onClick={this.props.closeModal} className="button_link" type="button">Cancel</Button>
                 </div>
             </Form>
         );
