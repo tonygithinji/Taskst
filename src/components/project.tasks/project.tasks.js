@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import styles from "./projecttasks.module.css";
 import Task from "./task";
-import { fetchTasks, tasksReceived, addTask } from "../../redux/actions/task";
+import { fetchTasks, tasksReceived, addTask, updateTask, taskUpdated } from "../../redux/actions/task";
 import { activateProject } from "../../redux/actions/project";
 import { activateWorkspace } from "../../redux/actions/workspace";
 import noTasks from "../../assets/images/no_tasks.svg";
@@ -63,6 +63,13 @@ class ProjectTasks extends Component {
             });
     }
 
+    handleEditTask = data => {
+        return this.props.updateTask(data)
+            .then(task => {
+                this.props.taskUpdated(task);
+            });
+    }
+
     render() {
         const { loading, tasks, project } = this.props;
         const { showAddTask, addFirstTask } = this.state;
@@ -116,7 +123,7 @@ class ProjectTasks extends Component {
                         </div>
 
                         <div>
-                            {tasks.map(task => <Task key={task._id} task={task} />)}
+                            {tasks.map(task => <Task key={task._id} task={task} editTask={this.handleEditTask} />)}
                             {showAddTask && <div><AddTaskForm cancel={this.cancelAddTask} addTask={this.doAddTask} /></div>}
                             {!showAddTask && (
                                 <div>
@@ -166,7 +173,9 @@ ProjectTasks.propTypes = {
         workspaceId: PropTypes.string
     }).isRequired,
     addTask: PropTypes.func.isRequired,
-    activateWorkspace: PropTypes.func.isRequired
+    activateWorkspace: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
+    taskUpdated: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -177,4 +186,12 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { fetchTasks, tasksReceived, activateProject, addTask, activateWorkspace })(ProjectTasks);
+export default connect(mapStateToProps, {
+    fetchTasks,
+    tasksReceived,
+    activateProject,
+    addTask,
+    activateWorkspace,
+    updateTask,
+    taskUpdated
+})(ProjectTasks);

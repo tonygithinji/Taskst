@@ -77,7 +77,7 @@ class AddTaskForm extends Component {
                     {errors.task && <InlineMessage status="error" text={errors.name} />}
                 </Form.Field>
                 <div style={{ marginTop: 8 }}>
-                    <Button basic floated="right" onClick={this.props.cancel} disabled={loading}> Cancel</Button>
+                    <Button basic floated="right" onClick={this.props.cancel} disabled={loading} type="button"> Cancel</Button>
                     <Button primary floated="right" disabled={loading || !valid}>
                         <Icon name="plus" /> Add
                     </Button>

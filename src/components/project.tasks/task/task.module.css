@@ -10,3 +10,11 @@
 .task_label {
     font-size: 1.2em !important;
 }
+
+.task_wrapper{
+    display: flex;
+}
+
+.task_checkbox{
+    flex: 1;
+}
