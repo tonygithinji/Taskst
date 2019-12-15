@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Segment, Checkbox, Icon, Input } from "semantic-ui-react";
 import styles from "./task.module.css";
+import ConfirmModal from "../../utils/confirm-modal";
 
 class Task extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class Task extends Component {
             saving: false,
             data: {
                 task: ""
-            }
+            },
+            deleting: false,
+            showConfirmDialog: false
         }
 
         this.inputRef = React.createRef();
@@ -39,18 +42,38 @@ class Task extends Component {
         }
     }
 
+    handleDeleteTask = () => {
+        this.setState({ showConfirmDialog: true });
+    }
+
+    confirmDeleteTask = confirm => {
+        if (confirm) {
+            this.deleteTask();
+        } else {
+            this.setState({ showConfirmDialog: false });
+        }
+    }
+
+    deleteTask = () => {
+        this.setState({ showConfirmDialog: false, deleting: true });
+        this.props.deleteTask(this.props.task)
+            .catch(() => this.setState({ deleting: false }));
+    }
+
     render() {
         const { task } = this.props;
-        const { showEdit, saving, data } = this.state;
+        const { showEdit, saving, data, deleting, showConfirmDialog } = this.state;
 
         return (
             <Segment className={`border_radius_12 ${styles.task_segment}`}>
                 {!showEdit && (
                     <div className={styles.task_wrapper}>
                         <div className={styles.task_checkbox}>
-                            <Checkbox label={task.task} defaultChecked={task.complete} className={styles.task_label} />
+                            <Checkbox label={task.task} defaultChecked={task.complete} className={styles.task_label} disabled={deleting} />
                         </div>
-                        <Icon name="edit outline" style={{ cursor: "pointer" }} onClick={this.handleEditTaskClick} />
+                        {!deleting && <Icon name="edit outline" className={styles.edit_icn} onClick={this.handleEditTaskClick} />}
+                        {!deleting && <Icon name="trash alternate outline" className={styles.delete_icn} onClick={this.handleDeleteTask} />}
+                        {deleting && <Icon name="spinner" loading />}
                     </div>
                 )}
 
@@ -64,6 +87,8 @@ class Task extends Component {
                         fluid ref={this.inputRef}
                         onBlur={this.updateTask} />
                 )}
+
+                {showConfirmDialog && <ConfirmModal callback={this.confirmDeleteTask} message="Are you sure you want to delete this task?" color="red" />}
             </Segment>
         )
     }
@@ -74,8 +99,11 @@ Task.propTypes = {
         task: PropTypes.string.isRequired,
         complete: PropTypes.bool.isRequired,
         _id: PropTypes.string.isRequired,
+        projectId: PropTypes.string.isRequired,
+        workspaceId: PropTypes.string.isRequired
     }).isRequired,
-    editTask: PropTypes.func.isRequired
+    editTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired
 }
 
 export default Task;

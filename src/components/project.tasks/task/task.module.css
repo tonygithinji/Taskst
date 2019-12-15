@@ -5,16 +5,32 @@
 .task_segment {
     padding-top: 1.4em !important;
     padding-bottom: 1.4em !important;
+    cursor: pointer;
 }
 
 .task_label {
     font-size: 1.2em !important;
 }
 
-.task_wrapper{
+.task_wrapper {
     display: flex;
 }
 
-.task_checkbox{
+.task_checkbox {
     flex: 1;
+}
+
+.edit_icn {
+    cursor: pointer;
+    display: none !important;
+    transition: display 2s;
+}
+
+.delete_icn {
+    composes: edit_icn;
+    color: #ff0000;
+}
+
+.task_segment:hover .edit_icn {
+    display: inline-block !important;
 }

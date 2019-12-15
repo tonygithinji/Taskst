@@ -94,7 +94,7 @@ class Project extends Component {
                                 <span><Icon name="tasks" /> {project.tasksNumber} task{project.tasksNumber > 1 && "s"}</span>
                                 <span><Icon name="check circle outline" /> {Math.ceil((project.completedTasks / (project.tasksNumber || 1)) * 100)}% complete</span>
                             </div>
-                            <span><Icon name="calendar" />Created on {moment(project.createdAt).format("d MMM YYYY")}</span>
+                            <span><Icon name="calendar" /> {moment(project.createdAt).format("d MMM YYYY")}</span>
 
                         </div>
                     </div>

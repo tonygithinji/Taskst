@@ -6,7 +6,7 @@ import NewProjectForm from "./forms/project.new.form";
 import { addProject, toggleAddProjectModal } from "../../redux/actions/project";
 import { activateWorkspace } from "../../redux/actions/workspace";
 
-export class NewProject extends Component {
+class NewProject extends Component {
 
     submit = data => {
         const newData = { ...data };

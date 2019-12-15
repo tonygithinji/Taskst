@@ -1,4 +1,4 @@
-import { LOADING_TASKS, TASKS_RECEIVED, TASK_UPDATED } from "../types";
+import { LOADING_TASKS, TASKS_RECEIVED, TASK_UPDATED, TASK_DELETED } from "../types";
 import api from "../../api";
 
 export const loadingTasks = () => {
@@ -36,6 +36,19 @@ export const updateTask = data => {
 export const taskUpdated = task => {
     return {
         type: TASK_UPDATED,
+        payload: task
+    }
+}
+
+export const deleteTask = data => {
+    return () => {
+        return api.task.deleteTask(data);
+    }
+}
+
+export const taskDeleted = task => {
+    return {
+        type: TASK_DELETED,
         payload: task
     }
 }
