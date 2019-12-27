@@ -11,8 +11,10 @@ import {
     fetchProjects,
     projectsReceived,
     updateProject,
-    projectUpdated
+    projectUpdated,
+    deleteProject
 } from "../../../redux/actions/project";
+import { updateWorkspaces } from "../../../redux/actions/workspace";
 
 class Projects extends Component {
 
@@ -37,6 +39,12 @@ class Projects extends Component {
             .then(project => {
                 this.props.projectUpdated(project);
             });
+    }
+
+    handleDeleteProject = project => {
+        this.props.deleteProject({ projectId: project._id, workspaceId: project.workspaceId })
+            .then(() => this.props.updateWorkspaces(project))
+            .catch(err => console.log(err));
     }
 
     render() {
@@ -100,6 +108,7 @@ class Projects extends Component {
                                     url={url}
                                     color={selectedWorkspace.color}
                                     editProjectName={this.handleUpdateProjectName}
+                                    deleteProject={this.handleDeleteProject}
                                 />)
                             }
                         </div>
@@ -135,7 +144,9 @@ Projects.propTypes = {
     }).isRequired,
     url: PropTypes.string.isRequired,
     updateProject: PropTypes.func.isRequired,
-    projectUpdated: PropTypes.func.isRequired
+    projectUpdated: PropTypes.func.isRequired,
+    deleteProject: PropTypes.func.isRequired,
+    updateWorkspaces: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -151,5 +162,7 @@ export default connect(mapStateToProps, {
     fetchProjects,
     projectsReceived,
     updateProject,
-    projectUpdated
+    projectUpdated,
+    deleteProject,
+    updateWorkspaces
 })(Projects);

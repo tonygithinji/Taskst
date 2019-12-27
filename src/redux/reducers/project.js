@@ -3,7 +3,8 @@ import {
     PROJECTS_RECEIVED,
     TOGGLE_SHOW_ADD_PROJECT_MODAL,
     ACTIVE_PROJECT,
-    PROJECT_UPDATED
+    PROJECT_UPDATED,
+    DELETE_PROJECT
 } from "../types";
 
 const initialState = {
@@ -37,10 +38,17 @@ const projectReducer = (state = initialState, action) => {
                 activeProject: action.payload
             }
         case PROJECT_UPDATED:
+            return {
+                ...state,
+                projects: {
+                    ...state.projects,
+                    [action.payload._id]: action.payload
+                }
+            }
+        case DELETE_PROJECT:
             // eslint-disable-next-line no-case-declarations
             const data = { ...state.projects };
-
-            data[action.payload._id] = action.payload
+            delete data[action.payload];
             return {
                 ...state,
                 projects: data

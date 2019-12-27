@@ -3,7 +3,8 @@ import {
     PROJECTS_RECEIVED,
     TOGGLE_SHOW_ADD_PROJECT_MODAL,
     ACTIVE_PROJECT,
-    PROJECT_UPDATED
+    PROJECT_UPDATED,
+    DELETE_PROJECT
 } from "../types";
 import api from "../../api";
 
@@ -57,5 +58,19 @@ export const projectUpdated = project => {
     return {
         type: PROJECT_UPDATED,
         payload: project
+    }
+}
+
+export const deleteProjectFromUI = projectId => {
+    return {
+        type: DELETE_PROJECT,
+        payload: projectId
+    }
+}
+
+export const deleteProject = data => {
+    return dispatch => {
+        dispatch(deleteProjectFromUI(data.projectId));
+        return api.project.deleteProject(data);
     }
 }

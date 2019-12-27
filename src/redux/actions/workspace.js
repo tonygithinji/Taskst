@@ -1,4 +1,4 @@
-import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE, UPDATE_WORKSPACE_PROJECT_DELETE } from "../types";
 import api from "../../api";
 
 export const workspacesReceived = (data) => {
@@ -39,3 +39,11 @@ export const activateWorkspace = workspaceId => {
         return api.workspace.getWorkspace(workspaceId).then(workspace => dispatch(setSelectedWorkspace(workspace)));
     }
 };
+
+// Updates workspaces after deleting a project
+export const updateWorkspaces = deletedProject => {
+    return {
+        type: UPDATE_WORKSPACE_PROJECT_DELETE,
+        payload: deletedProject
+    }
+}

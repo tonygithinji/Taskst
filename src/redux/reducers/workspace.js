@@ -1,4 +1,4 @@
-import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE, UPDATE_WORKSPACE_PROJECT_DELETE } from "../types";
 
 const initialState = {
     loading: false,
@@ -23,6 +23,23 @@ const workspaceReducer = (state = initialState, action) => {
             return {
                 ...state,
                 selectedWorkspace: action.payload
+            }
+        case UPDATE_WORKSPACE_PROJECT_DELETE:
+            return {
+                ...state,
+                selectedWorkspace: {
+                    ...state.selectedWorkspace,
+                    projectsNumber: state.selectedWorkspace.projectsNumber - 1,
+                    tasksNumber: state.selectedWorkspace.tasksNumber - action.payload.tasksNumber
+                },
+                workspaces: {
+                    ...state.workspaces,
+                    [action.payload.workspaceId]: {
+                        ...state.workspaces[action.payload.workspaceId],
+                        projectsNumber: state.selectedWorkspace.projectsNumber - 1,
+                        tasksNumber: state.selectedWorkspace.tasksNumber - action.payload.tasksNumber
+                    }
+                }
             }
         default:
             return state;
