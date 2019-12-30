@@ -77,7 +77,7 @@ class ProjectTasks extends Component {
         newData.projectId = this.props.match.params.id;
         return this.props.addTask(newData)
             .then(() => {
-                this.setState({ addFirstTask: false, showAddTask: false });
+                this.setState({ addFirstTask: false, showAddTask: true });
                 this.props.activateWorkspace(this.props.project.workspaceId);
                 this.fetchTasks(this.props.match.params.id);
             });

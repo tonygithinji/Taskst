@@ -42,6 +42,9 @@ class AddTaskForm extends Component {
         } else {
             this.setState({ errors: {}, loading: true });
             this.props.addTask(this.state.data)
+                .then(() => {
+                    this.setState({ loading: false, data: { task: "" } }, () => { this.inputRef.current.focus() });
+                })
                 .catch(err => {
                     if (err.response && err.response.data && err.response.data.errors) {
                         this.setState({ errors: err.response.data.errors, loading: false });
