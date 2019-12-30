@@ -23,8 +23,10 @@ import AddTaskForm from "./forms/add-task";
 
 class ProjectTasks extends Component {
     state = {
+        loading: false,
         addFirstTask: false,
-        showAddTask: false
+        showAddTask: false,
+        complete: false,
     };
 
     componentDidMount() {
@@ -38,8 +40,9 @@ class ProjectTasks extends Component {
         return true;
     }
 
-    fetchTasks = projectId => {
-        this.props.fetchTasks(projectId)
+    fetchTasks = (projectId) => {
+        this.setState({ loading: true });
+        this.props.fetchTasks(projectId, this.state.complete)
             .then(data => {
                 const tasks = {};
                 data.tasks.forEach(task => {
@@ -48,6 +51,7 @@ class ProjectTasks extends Component {
 
                 this.props.tasksReceived(tasks);
                 this.props.activateProject(data.project);
+                this.setState({ loading: false });
             });
     }
 
@@ -73,7 +77,7 @@ class ProjectTasks extends Component {
         newData.projectId = this.props.match.params.id;
         return this.props.addTask(newData)
             .then(() => {
-                this.setState({ addFirstTask: false });
+                this.setState({ addFirstTask: false, showAddTask: false });
                 this.props.activateWorkspace(this.props.project.workspaceId);
                 this.fetchTasks(this.props.match.params.id);
             });
@@ -114,27 +118,28 @@ class ProjectTasks extends Component {
                 this.props.updateProjectStats(task);
                 this.props.updateWorkspaceStats(task);
             })
+    }
 
+    toggleCompleteFilter = () => {
+        this.setState({ complete: !this.state.complete }, () => {
+            this.fetchTasks(this.props.match.params.id, this.state.complete);
+        });
     }
 
     render() {
-        const { loading, tasks, project } = this.props;
-        const { showAddTask, addFirstTask } = this.state;
+        const { tasks, project } = this.props;
+        const { showAddTask, addFirstTask, complete, loading } = this.state;
 
         return (
             <React.Fragment>
-                {loading && <Loader active size="big" />}
+                <div className={styles.header_wrapper}>
+                    <Link to="../../lists" className={styles.back_link}>
+                        <Icon name="angle left" size="big" />
+                    </Link>
+                    <Header as='h1' style={{ marginTop: 0 }}>{project ? project.name : ""}</Header>
+                </div>
 
-                {!loading && (
-                    <div className={styles.header_wrapper}>
-                        <Link to="../../projects" className={styles.back_link}>
-                            <Icon name="angle left" size="big" />
-                        </Link>
-                        <Header as='h1' style={{ marginTop: 0 }}>{project ? project.name : ""}</Header>
-                    </div>
-                )}
-
-                {!loading && tasks.length > 0 && !addFirstTask && (
+                {project.tasksNumber > 0 && !addFirstTask && (
                     <React.Fragment>
                         <Grid columns="equal" style={{ marginTop: "0.4rem" }}>
                             <Grid.Column>
@@ -181,32 +186,52 @@ class ProjectTasks extends Component {
 
                         <div className={styles.tasks_header}>
                             <Header as='h2' className={styles.tasks_header_h2}>Tasks</Header>
+                            <div className={styles.filter_wrapper}>
+                                <span className={!complete ? styles.filter_active : styles.filter} onClick={this.toggleCompleteFilter} role="button" tabIndex="0">Incomplete</span>
+                                <span className={complete ? styles.filter_active : styles.filter} onClick={this.toggleCompleteFilter} role="button" tabIndex="0">Complete</span>
+                            </div>
                         </div>
 
-                        <div>
-                            {
-                                tasks.map(task =>
-                                    <Task
-                                        key={task._id}
-                                        task={task}
-                                        editTask={this.handleEditTask}
-                                        deleteTask={this.deleteTask}
-                                        completeTask={this.handleCompleteTask}
-                                    />)
-                            }
-                            {showAddTask && <div><AddTaskForm cancel={this.cancelAddTask} addTask={this.doAddTask} /></div>}
-                            {!showAddTask && (
-                                <div>
-                                    <Button basic onClick={this.handleAddTask}>
-                                        <Icon name="plus" /> Add Task
-                                    </Button>
-                                </div>
-                            )}
-                        </div>
+                        {loading && <Loader active size="medium" />}
+
+                        {!loading && (
+                            <div>
+                                {
+                                    tasks.map(task =>
+                                        <Task
+                                            key={task._id}
+                                            task={task}
+                                            editTask={this.handleEditTask}
+                                            deleteTask={this.deleteTask}
+                                            completeTask={this.handleCompleteTask}
+                                        />)
+                                }
+                                {showAddTask && <div><AddTaskForm cancel={this.cancelAddTask} addTask={this.doAddTask} /></div>}
+                                {!showAddTask && !complete && tasks.length > 0 && (
+                                    <div>
+                                        <Button basic onClick={this.handleAddTask}>
+                                            <Icon name="plus" /> Add Task
+                                        </Button>
+                                    </div>
+                                )}
+
+                                {!showAddTask && tasks.length === 0 && (
+                                    <div style={{ marginTop: "10em", textAlign: "center" }}>
+                                        <Image src={noTasks} centered size="medium" />
+                                        <Header as="h4">No tasks here</Header>
+                                        {!complete && (
+                                            <Button basic onClick={this.handleAddTask}>
+                                                <Icon name="plus" /> Add Task
+                                            </Button>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </React.Fragment>
                 )}
 
-                {!loading && tasks.length === 0 && !addFirstTask && (
+                {project.tasksNumber === 0 && !addFirstTask && (
                     <div style={{ marginTop: "20em", textAlign: "center" }}>
                         <Image src={noTasks} centered size="medium" />
                         <Header as="h4">Add a task to get started!</Header>
@@ -229,7 +254,6 @@ class ProjectTasks extends Component {
 
 ProjectTasks.propTypes = {
     tasks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    loading: PropTypes.bool.isRequired,
     fetchTasks: PropTypes.func.isRequired,
     tasksReceived: PropTypes.func.isRequired,
     activateProject: PropTypes.func.isRequired,

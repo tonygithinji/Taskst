@@ -38,14 +38,14 @@ const Sidebar = ({ user, toggleAddProjectModal, history, selectedWorkspace }) =>
                         <NavLink to={`/workspaces/${selectedWorkspace._id}/overview`} activeClassName="menu_item_active" className={styles.menu_item}>Overview</NavLink >
                     </li>
                     <li>
-                        <NavLink to={`/workspaces/${selectedWorkspace._id}/projects`} activeClassName="menu_item_active" className={styles.menu_item}>Projects</NavLink >
+                        <NavLink to={`/workspaces/${selectedWorkspace._id}/lists`} activeClassName="menu_item_active" className={styles.menu_item}>Lists</NavLink >
                     </li>
                     <li className={styles.menu_item}>Starred</li>
                     <li className={styles.menu_item}>Labels</li>
                 </ul>
             </div>
             <div className={styles.profile_wrapper}>
-                <Button primary fluid onClick={handleOnClick}> <Icon name="add" />Add Project</Button>
+                <Button primary fluid onClick={handleOnClick}> <Icon name="add" />Add List</Button>
                 <div className={styles.profile}>
                     <div className={styles.profile_icon}>{user.firstName.substring(0, 1)}</div>
                     <div className={styles.profile_name}>{user.firstName} {user.lastName}</div>

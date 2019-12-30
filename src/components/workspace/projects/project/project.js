@@ -70,6 +70,7 @@ class Project extends Component {
         const { project, url } = this.props;
         const { showEdit, saving, data, showConfirmDialog } = this.state;
         const color = this.props.color || this.state.color;
+        const completePercentage = Math.ceil((project.completedTasks / (project.tasksNumber || 1)) * 100);
 
         return (
             <React.Fragment>
@@ -81,7 +82,7 @@ class Project extends Component {
                         <div className={styles.project_content}>
                             <div className={styles.project_header}>
                                 {!showEdit && (
-                                    <Link to={`${url}/projects/${project._id}/tasks`} style={{ flex: 1, margin: 0 }}>
+                                    <Link to={`${url}/lists/${project._id}/tasks`} style={{ flex: 1, margin: 0 }}>
                                         <Header as="h2">{project.name}</Header>
                                     </Link>
                                 )}
@@ -105,13 +106,13 @@ class Project extends Component {
                             </div>
                             <div className={styles.project_body}>
                                 <div className={styles.stats_bar}>
-                                    <div className={styles.progress_bar} />
+                                    <div className={styles.progress_bar} style={{ width: `${completePercentage}%` }} />
                                 </div>
                             </div>
                             <div className={styles.metadata}>
                                 <div style={{ flex: 1 }}>
-                                    <span><Icon name="tasks" /> {project.tasksNumber} task{project.tasksNumber > 1 && "s"}</span>
-                                    <span><Icon name="check circle outline" /> {Math.ceil((project.completedTasks / (project.tasksNumber || 1)) * 100)}% complete</span>
+                                    <span><Icon name="tasks" /> {project.tasksNumber} task{(project.tasksNumber > 1 || project.tasksNumber === 0) && "s"}</span>
+                                    <span><Icon name="check circle outline" /> {completePercentage}% complete</span>
                                 </div>
                                 <span><Icon name="calendar" /> {moment(project.createdAt).format("d MMM YYYY")}</span>
                             </div>

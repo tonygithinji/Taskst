@@ -57,7 +57,7 @@ class Projects extends Component {
                 {!loading && projects.length > 0 && (
                     <React.Fragment>
                         <div style={{ paddingTop: 16 }}>
-                            <Header as='h1'>Projects</Header>
+                            <Header as='h1'>Lists</Header>
                         </div>
                         <Grid columns="equal" style={{ marginTop: "0.4rem" }}>
                             <Grid.Column>
@@ -119,8 +119,8 @@ class Projects extends Component {
                     <React.Fragment>
                         <div style={{ marginTop: "20em", textAlign: "center" }}>
                             <Image src={noProjects} centered size="medium" />
-                            <Header as="h4">Add a project to get started!</Header>
-                            <Button primary onClick={this.handleOnClick}> <Icon name="add" />Add a Project</Button>
+                            <Header as="h4">Add a list to get started!</Header>
+                            <Button primary onClick={this.handleOnClick}> <Icon name="add" />Add a List</Button>
                         </div>
                     </React.Fragment>
                 )}

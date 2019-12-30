@@ -15,7 +15,7 @@ class NewProject extends Component {
             .then(project => {
                 this.closeModal();
                 this.props.activateWorkspace(this.props.selectedWorkspace._id);
-                this.props.history.push(`/workspaces/${this.props.selectedWorkspace._id}/projects/${project._id}/tasks`)
+                this.props.history.push(`/workspaces/${this.props.selectedWorkspace._id}/lists/${project._id}/tasks`)
             });
     }
 
@@ -30,7 +30,7 @@ class NewProject extends Component {
             <React.Fragment>
                 <Portal open={showModal}>
                     <Modal open size="mini">
-                        <Modal.Header style={{ textAlign: "center", border: "none", paddingBottom: 0 }}>Add a Project</Modal.Header>
+                        <Modal.Header style={{ textAlign: "center", border: "none", paddingBottom: 0 }}>Create a List</Modal.Header>
                         <Modal.Content>
                             <NewProjectForm submit={this.submit} closeModal={this.closeModal} />
                         </Modal.Content>

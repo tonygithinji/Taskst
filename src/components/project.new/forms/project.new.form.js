@@ -77,7 +77,7 @@ class NewProjectForm extends Component {
                     <input type="text" name="name" value={data.name} onChange={this.handleOnChange} ref={this.inputRef} />
                     {errors.name && <InlineMessage status="error" text={errors.name} />}
                 </Form.Field>
-                <Button primary disabled={loading || !valid} fluid>Create Project</Button>
+                <Button primary disabled={loading || !valid} fluid>Create List</Button>
                 <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
                     <Button basic onClick={this.props.closeModal} className="button_link" type="button">Cancel</Button>
                 </div>

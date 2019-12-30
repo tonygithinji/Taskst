@@ -35,7 +35,7 @@ const workspaceReducer = (state = initialState, action) => {
                 workspaces: {
                     ...state.workspaces,
                     [action.payload.workspaceId]: {
-                        ...state.workspaces[action.payload.workspaceId],
+                        ...state.selectedWorkspace,
                         projectsNumber: state.selectedWorkspace.projectsNumber - 1,
                         tasksNumber: state.selectedWorkspace.tasksNumber - action.payload.tasksNumber
                     }

@@ -34,10 +34,10 @@ class Workspace extends Component {
                             <Route path={`${this.props.match.url}/overview`}>
                                 <Overview user={user} />
                             </Route>
-                            <Route exact path={`${this.props.match.url}/projects`}>
+                            <Route exact path={`${this.props.match.url}/lists`}>
                                 <Projects workspaceId={this.props.match.params.id} url={this.props.match.url} />
                             </Route>
-                            <Route exact path={`${this.props.match.url}/projects/:id/tasks`} component={ProjectTasks} />
+                            <Route exact path={`${this.props.match.url}/lists/:id/tasks`} component={ProjectTasks} />
                         </Switch>
                     </Grid.Column>
                 </Grid>

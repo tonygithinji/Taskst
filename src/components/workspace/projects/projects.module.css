@@ -43,6 +43,7 @@
     color: #565682;
     cursor: pointer;
     font-size: 16px;
+    outline: none;
 }
 
 .filter_active {
