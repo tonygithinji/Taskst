@@ -4,7 +4,8 @@ import {
     TOGGLE_SHOW_ADD_PROJECT_MODAL,
     ACTIVE_PROJECT,
     PROJECT_UPDATED,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    UPDATE_PROJECT_STATS
 } from "../types";
 import api from "../../api";
 
@@ -72,5 +73,15 @@ export const deleteProject = data => {
     return dispatch => {
         dispatch(deleteProjectFromUI(data.projectId));
         return api.project.deleteProject(data);
+    }
+}
+
+export const updateProjectStats = task => {
+    return {
+        type: UPDATE_PROJECT_STATS,
+        payload: {
+            task,
+            updateCount: task.complete ? 1 : -1
+        }
     }
 }

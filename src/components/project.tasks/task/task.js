@@ -60,6 +60,12 @@ class Task extends Component {
             .catch(() => this.setState({ deleting: false }));
     }
 
+    completeTask = () => {
+        const task = { ...this.props.task };
+        task.complete = !this.props.task.complete;
+        this.props.completeTask(task);
+    }
+
     render() {
         const { task } = this.props;
         const { showEdit, saving, data, deleting, showConfirmDialog } = this.state;
@@ -69,7 +75,7 @@ class Task extends Component {
                 {!showEdit && (
                     <div className={styles.task_wrapper}>
                         <div className={styles.task_checkbox}>
-                            <Checkbox label={task.task} defaultChecked={task.complete} className={styles.task_label} disabled={deleting} />
+                            <Checkbox label={task.task} defaultChecked={task.complete} className={styles.task_label} disabled={deleting} onChange={this.completeTask} />
                         </div>
                         {!deleting && <Icon name="edit outline" className={styles.edit_icn} onClick={this.handleEditTaskClick} />}
                         {!deleting && <Icon name="trash alternate outline" className={styles.delete_icn} onClick={this.handleDeleteTask} />}
@@ -103,7 +109,8 @@ Task.propTypes = {
         workspaceId: PropTypes.string.isRequired
     }).isRequired,
     editTask: PropTypes.func.isRequired,
-    deleteTask: PropTypes.func.isRequired
+    deleteTask: PropTypes.func.isRequired,
+    completeTask: PropTypes.func.isRequired
 }
 
 export default Task;

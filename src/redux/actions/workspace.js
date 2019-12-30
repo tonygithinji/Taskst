@@ -1,4 +1,4 @@
-import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE, UPDATE_WORKSPACE_PROJECT_DELETE } from "../types";
+import { LOADING_WORKSPACES, WORKSPACES_RECEIVED, SET_SELECTED_WORKSPACE, UPDATE_WORKSPACE_PROJECT_DELETE, UPDATE_WORKSPACE_STATS } from "../types";
 import api from "../../api";
 
 export const workspacesReceived = (data) => {
@@ -45,5 +45,15 @@ export const updateWorkspaces = deletedProject => {
     return {
         type: UPDATE_WORKSPACE_PROJECT_DELETE,
         payload: deletedProject
+    }
+}
+
+// Updates selected workspace completed tasks after a task is completed
+export const updateWorkspaceStats = task => {
+    return {
+        type: UPDATE_WORKSPACE_STATS,
+        payload: {
+            updateCount: task.complete ? 1 : -1
+        }
     }
 }

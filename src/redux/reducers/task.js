@@ -1,4 +1,4 @@
-import { LOADING_TASKS, TASKS_RECEIVED, TASK_UPDATED, TASK_DELETED } from "../types";
+import { LOADING_TASKS, TASKS_RECEIVED, TASK_UPDATED, TASK_DELETED, COMPLETE_TASK } from "../types";
 
 const initialState = {
     tasks: {},
@@ -19,13 +19,12 @@ const taskReducer = (state = initialState, action) => {
                 loading: false
             }
         case TASK_UPDATED:
-            // eslint-disable-next-line no-case-declarations
-            const data = { ...state.tasks };
-
-            data[action.payload._id] = action.payload
             return {
                 ...state,
-                tasks: data
+                tasks: {
+                    ...state.tasks,
+                    [action.payload._id]: action.payload
+                }
             }
         case TASK_DELETED:
             // eslint-disable-next-line no-case-declarations
@@ -35,6 +34,14 @@ const taskReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tasks: oldTasks
+            }
+        case COMPLETE_TASK:
+            return {
+                ...state,
+                tasks: {
+                    ...state.tasks,
+                    [action.payload._id]: action.payload
+                }
             }
         default:
             return state;

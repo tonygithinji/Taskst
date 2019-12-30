@@ -6,9 +6,18 @@ import { Link } from "react-router-dom";
 
 import styles from "./projecttasks.module.css";
 import Task from "./task";
-import { fetchTasks, tasksReceived, addTask, updateTask, taskUpdated, deleteTask, taskDeleted } from "../../redux/actions/task";
-import { activateProject } from "../../redux/actions/project";
-import { activateWorkspace } from "../../redux/actions/workspace";
+import {
+    fetchTasks,
+    tasksReceived,
+    addTask,
+    updateTask,
+    taskUpdated,
+    deleteTask,
+    taskDeleted,
+    completeTask
+} from "../../redux/actions/task";
+import { activateProject, updateProjectStats } from "../../redux/actions/project";
+import { activateWorkspace, updateWorkspaceStats } from "../../redux/actions/workspace";
 import noTasks from "../../assets/images/no_tasks.svg";
 import AddTaskForm from "./forms/add-task";
 
@@ -99,6 +108,15 @@ class ProjectTasks extends Component {
             });
     }
 
+    handleCompleteTask = task => {
+        this.props.completeTask(task)
+            .then(() => {
+                this.props.updateProjectStats(task);
+                this.props.updateWorkspaceStats(task);
+            })
+
+    }
+
     render() {
         const { loading, tasks, project } = this.props;
         const { showAddTask, addFirstTask } = this.state;
@@ -166,7 +184,16 @@ class ProjectTasks extends Component {
                         </div>
 
                         <div>
-                            {tasks.map(task => <Task key={task._id} task={task} editTask={this.handleEditTask} deleteTask={this.deleteTask} />)}
+                            {
+                                tasks.map(task =>
+                                    <Task
+                                        key={task._id}
+                                        task={task}
+                                        editTask={this.handleEditTask}
+                                        deleteTask={this.deleteTask}
+                                        completeTask={this.handleCompleteTask}
+                                    />)
+                            }
                             {showAddTask && <div><AddTaskForm cancel={this.cancelAddTask} addTask={this.doAddTask} /></div>}
                             {!showAddTask && (
                                 <div>
@@ -222,7 +249,10 @@ ProjectTasks.propTypes = {
     updateTask: PropTypes.func.isRequired,
     taskUpdated: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
-    taskDeleted: PropTypes.func.isRequired
+    taskDeleted: PropTypes.func.isRequired,
+    completeTask: PropTypes.func.isRequired,
+    updateProjectStats: PropTypes.func.isRequired,
+    updateWorkspaceStats: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -242,5 +272,8 @@ export default connect(mapStateToProps, {
     updateTask,
     taskUpdated,
     deleteTask,
-    taskDeleted
+    taskDeleted,
+    completeTask,
+    updateProjectStats,
+    updateWorkspaceStats
 })(ProjectTasks);

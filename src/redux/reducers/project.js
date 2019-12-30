@@ -4,7 +4,8 @@ import {
     TOGGLE_SHOW_ADD_PROJECT_MODAL,
     ACTIVE_PROJECT,
     PROJECT_UPDATED,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    UPDATE_PROJECT_STATS
 } from "../types";
 
 const initialState = {
@@ -52,6 +53,21 @@ const projectReducer = (state = initialState, action) => {
             return {
                 ...state,
                 projects: data
+            }
+        case UPDATE_PROJECT_STATS:
+            return {
+                ...state,
+                activeProject: {
+                    ...state.activeProject,
+                    completedTasks: state.activeProject.completedTasks + (action.payload.updateCount)
+                },
+                projects: {
+                    ...state.projects,
+                    [action.payload.task.projectId]: {
+                        ...state.projects[action.payload.task.projectId],
+                        completedTasks: state.activeProject.completedTasks + (action.payload.updateCount)
+                    }
+                }
             }
         default:
             return state;
