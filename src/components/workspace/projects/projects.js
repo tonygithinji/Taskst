@@ -59,12 +59,12 @@ class Projects extends Component {
                         <div style={{ paddingTop: 16 }}>
                             <Header as='h1'>Lists</Header>
                         </div>
-                        <Grid columns="equal" style={{ marginTop: "0.4rem" }}>
+                        <Grid columns="equal" stackable style={{ marginTop: "0.4rem" }}>
                             <Grid.Column>
                                 <Segment className={styles.banner}>
                                     <div className={styles.stats_body}>
                                         <Header as="h3" className={styles.stat_header}>{selectedWorkspace.projectsNumber}</Header>
-                                        <div className={styles.stat_num}>Project{selectedWorkspace.projectsNumber > 1 && "s"}</div>
+                                        <div className={styles.stat_num}>List{selectedWorkspace.projectsNumber > 1 && "s"}</div>
                                     </div>
                                     <div className={styles.stat_icon}>
                                         <Icon name="clipboard" size="huge" />
@@ -119,7 +119,8 @@ class Projects extends Component {
                     <React.Fragment>
                         <div style={{ marginTop: "20em", textAlign: "center" }}>
                             <Image src={noProjects} centered size="medium" />
-                            <Header as="h4">Add a list to get started!</Header>
+                            <div style={{ marginTop: 20 }}>Your lists will appear here</div>
+                            <div style={{ marginBottom: 20 }}>Add a list to get started</div>
                             <Button primary onClick={this.handleOnClick}> <Icon name="add" />Add a List</Button>
                         </div>
                     </React.Fragment>

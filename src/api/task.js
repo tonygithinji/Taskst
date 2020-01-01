@@ -6,7 +6,8 @@ const task = {
     addTask: data => axios.post(`${SERVER_URL}/api/tasks`, { data }).then(res => res.data.task),
     updateTask: data => axios.post(`${SERVER_URL}/api/tasks/update`, { data }).then(res => res.data.task),
     deleteTask: data => axios.post(`${SERVER_URL}/api/tasks/delete`, { data }).then(res => res.data.task),
-    completeTask: data => axios.post(`${SERVER_URL}/api/tasks/complete`, { data })
+    completeTask: data => axios.post(`${SERVER_URL}/api/tasks/complete`, { data }),
+    getTasksGraphData: data => axios.post(`${SERVER_URL}/api/tasks/graphdata`, { data }).then(res => res.data.data)
 }
 
 export default task;

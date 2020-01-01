@@ -67,7 +67,7 @@ class Project extends Component {
     }
 
     render() {
-        const { project, url } = this.props;
+        const { project, url, showIcons } = this.props;
         const { showEdit, saving, data, showConfirmDialog } = this.state;
         const color = this.props.color || this.state.color;
         const completePercentage = Math.ceil((project.completedTasks / (project.tasksNumber || 1)) * 100);
@@ -90,13 +90,13 @@ class Project extends Component {
                                     <Input loading={saving} disabled={saving} value={data.projectName} onChange={this.handleOnChange} onKeyUp={this.handleOnKeyUp} fluid style={{ flex: 1, marginRight: 10 }} ref={this.inputRef} onBlur={this.updateProjectName} />
                                 )}
                                 <div>
-                                    {!showEdit && (
+                                    {!showEdit && showIcons && (
                                         <React.Fragment>
                                             <Icon name="edit outline" style={{ margin: "0 .45rem 0 0" }} onClick={this.handleEditProjectClick} />
                                             <Icon name="check circle outline" style={{ margin: "0 .45rem 0 0" }} />
                                             <Dropdown icon="ellipsis vertical" direction="left" floating>
                                                 <Dropdown.Menu>
-                                                    <Dropdown.Item icon="eye" text="View" as={Link} to={`${url}/projects/${project._id}/tasks`} />
+                                                    <Dropdown.Item icon="eye" text="View" as={Link} to={`${url}/lists/${project._id}/tasks`} />
                                                     <Dropdown.Item icon="times" text="Delete" onClick={this.handleDeleteProject} />
                                                 </Dropdown.Menu>
                                             </Dropdown>
@@ -119,7 +119,7 @@ class Project extends Component {
                         </div>
                     </div>
                 </Segment>
-                {showConfirmDialog && <ConfirmModal callback={this.confirmDeleteProject} message="Are you sure you want to delete this project?" color="red" />}
+                {showConfirmDialog && <ConfirmModal callback={this.confirmDeleteProject} message="Are you sure you want to delete this list?" color="red" />}
             </React.Fragment>
         )
     }
@@ -137,11 +137,13 @@ Project.propTypes = {
     url: PropTypes.string.isRequired,
     color: PropTypes.string,
     editProjectName: PropTypes.func.isRequired,
-    deleteProject: PropTypes.func.isRequired
+    deleteProject: PropTypes.func.isRequired,
+    showIcons: PropTypes.bool
 }
 
 Project.defaultProps = {
-    color: ""
+    color: "",
+    showIcons: true
 }
 
 export default Project;

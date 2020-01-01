@@ -32,7 +32,7 @@ class Workspace extends Component {
                     <Grid.Column width={12} className={styles.content_wrapper}>
                         <Switch>
                             <Route path={`${this.props.match.url}/overview`}>
-                                <Overview user={user} />
+                                <Overview user={user} url={this.props.match.url} />
                             </Route>
                             <Route exact path={`${this.props.match.url}/lists`}>
                                 <Projects workspaceId={this.props.match.params.id} url={this.props.match.url} />

@@ -3,8 +3,57 @@
     border-radius: 12px !important;
     color: #fff !important;
     padding: 1em 3em !important;
+    display: flex;
 }
 
 .banner h2 {
     color: #fff !important;
+}
+
+.body {
+    flex: 1;
+    align-self: center;
+}
+
+.bannerImage {
+    width: 140px !important;
+    margin-top: -54px !important;
+}
+
+.summaryList {
+    display: flex !important;
+    padding: 1.2em 0 !important;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.summaryList:last-child {
+    border-bottom: none;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.graphHeader {
+    display: flex;
+}
+
+.filter_wrapper {
+    text-align: right;
+}
+
+.filter {
+    padding: 6px 20px;
+    border-radius: 60px;
+    padding-bottom: 8px;
+    color: #565682;
+    cursor: pointer;
+    font-size: 14px;
+    outline: none;
+}
+
+.filter_active {
+    composes: filter;
+    background-color: #565682;
+    color: #ffffff;
 }
