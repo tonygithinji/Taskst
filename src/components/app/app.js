@@ -36,7 +36,7 @@ class App extends Component {
     const { loading } = this.state;
 
     return (
-      <Container className={styles.app}>
+      <Container fluid className={styles.app}>
         {loading && <Loader active size="big" />}
 
         {!loading && (
@@ -54,7 +54,6 @@ class App extends Component {
             </Route>
           </Switch>
         )}
-
       </Container>
     )
   }

@@ -108,7 +108,7 @@
 }
 
 .menu_item {
-    padding-left: 50px;
+    padding-left: 30px;
     padding-top: 12px;
     padding-bottom: 12px;
     margin: 12px 0;
@@ -121,7 +121,7 @@
 }
 
 :global .menu_item_active {
-    padding-left: 50px;
+    padding-left: 30px;
     padding-top: 12px;
     padding-bottom: 12px;
     margin: 12px 0;

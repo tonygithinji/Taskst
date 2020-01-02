@@ -118,107 +118,114 @@ class Overview extends Component {
                                     </div>
                                 </Segment>
 
-                                <Segment style={{ borderRadius: "12px", marginTop: "1.6rem" }}>
-                                    <Grid columns="equal" stackable>
-                                        <Grid.Row stretched style={{ padding: "0", minHeight: "400px" }}>
-                                            <Grid.Column width={12} style={{ padding: "1rem" }}>
-                                                <div className={styles.graphHeader}>
-                                                    <div className={styles.flex1}>
-                                                        <Header as="h2">Tasks</Header>
-                                                    </div>
-                                                    <div className={styles.flex1}>
-                                                        <div className={styles.filter_wrapper}>
-                                                            <span className={activeFilter === "week" ? styles.filter_active : styles.filter} onClick={() => this.switchFilters("week")} role="button" tabIndex="0">Week</span>
-                                                            <span className={activeFilter === "month" ? styles.filter_active : styles.filter} onClick={() => this.switchFilters("month")} role="button" tabIndex="0">Month</span>
-                                                            <span className={activeFilter === "year" ? styles.filter_active : styles.filter} onClick={() => this.switchFilters("year")} role="button" tabIndex="0">Year</span>
+                                <Grid columns="equal" stackable>
+                                    <Grid.Column >
+                                        <Segment style={{ borderRadius: "12px", marginTop: "1.2rem", maxHeight: "400px" }}>
+                                            <Grid columns="equal" stackable>
+                                                <Grid.Row stretched style={{ padding: "0", minHeight: "400px", maxHeight: "400px" }}>
+                                                    <Grid.Column style={{ padding: "1rem" }}>
+                                                        <div className={styles.graphHeader}>
+                                                            <div className={styles.flex1}>
+                                                                <Header as="h2">Tasks</Header>
+                                                            </div>
+                                                            <div className={styles.flex1}>
+                                                                <div className={styles.filter_wrapper}>
+                                                                    <span className={activeFilter === "week" ? styles.filter_active : styles.filter} onClick={() => this.switchFilters("week")} role="button" tabIndex="0">Week</span>
+                                                                    <span className={activeFilter === "month" ? styles.filter_active : styles.filter} onClick={() => this.switchFilters("month")} role="button" tabIndex="0">Month</span>
+                                                                    <span className={activeFilter === "year" ? styles.filter_active : styles.filter} onClick={() => this.switchFilters("year")} role="button" tabIndex="0">Year</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    {graphLoading && <Loader active size="medium" />}
+                                                        <div>
+                                                            {graphLoading && <Loader active size="medium" />}
 
-                                                    {!graphLoading && (
-                                                        <ResponsiveContainer>
-                                                            <BarChart width="100%" height={380} data={data}>
-                                                                <XAxis dataKey="day" />
-                                                                <YAxis />
-                                                                <Tooltip />
-                                                                <Legend />
-                                                                <Bar dataKey="complete" stackId="t" fill="#565682" />
-                                                                <Bar dataKey="incomplete" stackId="t" fill="#DCE1EE" />
-                                                            </BarChart>
-                                                        </ResponsiveContainer>
-                                                    )}
-                                                </div>
-                                            </Grid.Column>
-                                            <Grid.Column style={{ padding: "1rem", backgroundColor: "#DCE1EE" }}>
-                                                <Header as="h3" textAlign="center">Quick Summary</Header>
-                                                <List style={{ flexGrow: 999 }}>
-                                                    <List.Item className={styles.summaryList}>
-                                                        <div className={styles.flex1}>Lists</div>
-                                                        <div className={styles.flex1}>
-                                                            <Header as="h4" textAlign="right">{workspace.projectsNumber}</Header>
+                                                            {!graphLoading && (
+                                                                <ResponsiveContainer>
+                                                                    <BarChart width="100%" height={380} data={data}>
+                                                                        <XAxis dataKey="day" />
+                                                                        <YAxis />
+                                                                        <Tooltip />
+                                                                        <Legend />
+                                                                        <Bar dataKey="complete" stackId="t" fill="#565682" />
+                                                                        <Bar dataKey="incomplete" stackId="t" fill="#DCE1EE" />
+                                                                    </BarChart>
+                                                                </ResponsiveContainer>
+                                                            )}
                                                         </div>
-                                                    </List.Item>
-                                                    <List.Item className={styles.summaryList}>
-                                                        <div className={styles.flex1}>Tasks</div>
-                                                        <div className={styles.flex1}>
-                                                            <Header as="h4" textAlign="right">{workspace.tasksNumber}</Header>
-                                                        </div>
-                                                    </List.Item>
-                                                    <List.Item className={styles.summaryList}>
-                                                        <div className={styles.flex1}>Completed</div>
-                                                        <div className={styles.flex1}>
-                                                            <Header as="h4" textAlign="right">{workspace.completedTasks}</Header>
-                                                        </div>
-                                                    </List.Item>
-                                                    <List.Item className={styles.summaryList}>
-                                                        <div className={styles.flex1}>Completion</div>
-                                                        <div className={styles.flex1}>
-                                                            <Header as="h4" textAlign="right">{completePercentage}%</Header>
-                                                        </div>
-                                                    </List.Item>
-                                                </List>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                    </Grid>
-                                </Segment>
+                                                    </Grid.Column>
+                                                    <Grid.Column style={{ padding: "1rem", backgroundColor: "#DCE1EE" }} width={4}>
+                                                        <Header as="h3" textAlign="center">Quick Summary</Header>
+                                                        <List style={{ flexGrow: 999 }}>
+                                                            <List.Item className={styles.summaryList}>
+                                                                <div className={styles.flex1}>Lists</div>
+                                                                <div className={styles.flex1}>
+                                                                    <Header as="h4" textAlign="right">{workspace.projectsNumber}</Header>
+                                                                </div>
+                                                            </List.Item>
+                                                            <List.Item className={styles.summaryList}>
+                                                                <div className={styles.flex1}>Tasks</div>
+                                                                <div className={styles.flex1}>
+                                                                    <Header as="h4" textAlign="right">{workspace.tasksNumber}</Header>
+                                                                </div>
+                                                            </List.Item>
+                                                            <List.Item className={styles.summaryList}>
+                                                                <div className={styles.flex1}>Completed</div>
+                                                                <div className={styles.flex1}>
+                                                                    <Header as="h4" textAlign="right">{workspace.completedTasks}</Header>
+                                                                </div>
+                                                            </List.Item>
+                                                            <List.Item className={styles.summaryList}>
+                                                                <div className={styles.flex1}>Completion</div>
+                                                                <div className={styles.flex1}>
+                                                                    <Header as="h4" textAlign="right">{completePercentage}%</Header>
+                                                                </div>
+                                                            </List.Item>
+                                                        </List>
+                                                    </Grid.Column>
+                                                </Grid.Row>
+                                            </Grid>
+                                        </Segment>
 
-                                <Header as="h3">Recently Updated Lists</Header>
+                                    </Grid.Column>
+                                </Grid>
 
-                                {recentListsLoading && (
-                                    <div style={{ position: "relative", marginTop: 60 }}>
-                                        <Loader active size="medium" />
-                                    </div>
-                                )}
+                                <div style={{ margin: "2em 0" }}>
+                                    <Header as="h3">Recently Updated Lists</Header>
+
+                                    {recentListsLoading && (
+                                        <div style={{ position: "relative", marginTop: 60 }}>
+                                            <Loader active size="medium" />
+                                        </div>
+                                    )}
 
 
-                                {!recentListsLoading && recentLists.length === 0 && (
-                                    <div style={{ marginTop: "10em", textAlign: "center" }}>
-                                        <div>Your recent lists will appear here</div>
-                                    </div>
-                                )}
+                                    {!recentListsLoading && recentLists.length === 0 && (
+                                        <div style={{ margin: "10em 0", textAlign: "center" }}>
+                                            <div>Your recent lists will appear here</div>
+                                        </div>
+                                    )}
 
-                                {!recentListsLoading && recentLists.length > 0 && (
-                                    <div>
-                                        {
-                                            recentLists.map(list => <Project
-                                                key={list._id}
-                                                project={list}
-                                                url={url}
-                                                color={workspace.color}
-                                                editProjectName={this.handleUpdateProjectName}
-                                                deleteProject={this.handleDeleteProject}
-                                                showIcons={false}
-                                            />)
-                                        }
-                                    </div>
-                                )}
+                                    {!recentListsLoading && recentLists.length > 0 && (
+                                        <div>
+                                            {
+                                                recentLists.map(list => <Project
+                                                    key={list._id}
+                                                    project={list}
+                                                    url={url}
+                                                    color={workspace.color}
+                                                    editProjectName={this.handleUpdateProjectName}
+                                                    deleteProject={this.handleDeleteProject}
+                                                    showIcons={false}
+                                                />)
+                                            }
+                                        </div>
+                                    )}
+                                </div>
                             </React.Fragment>
                         )}
 
                         {workspace.projectsNumber === 0 && (
-                            <div style={{ marginTop: "20em", textAlign: "center" }}>
+                            <div style={{ margin: "20em 0", textAlign: "center" }}>
                                 <Image src={noProjects} centered size="medium" />
                                 <div style={{ marginTop: 20 }}>An overview of your lists and tasks will appear here</div>
                                 <div style={{ marginBottom: 20 }}>Add a list to get started</div>

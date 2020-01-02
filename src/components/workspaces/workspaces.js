@@ -33,13 +33,13 @@ class Workspaces extends Component {
     render() {
         const { workspaces, loading, user } = this.props;
         return (
-            <div style={{ marginTop: "40px" }}>
+            <div style={{ height: "100vh", backgroundColor: "#EDEFF2" }}>
                 {loading && <Loader active size="big" />}
 
                 {!loading && (
                     <React.Fragment>
-                        <Header as="h1" textAlign="center" style={{ marginBottom: "40px", textTransform: "capitalize" }}>Hello, {user.firstName}</Header>
-                        <Grid >
+                        <Header as="h1" textAlign="center" style={{ marginBottom: "40px", textTransform: "capitalize", paddingTop: "6rem" }}>Hello, {user.firstName}</Header>
+                        <Grid container stackable relaxed doubling>
                             <Grid.Row columns={3}>
                                 <Grid.Column>
                                     <Workspace workspace={{}} empty />

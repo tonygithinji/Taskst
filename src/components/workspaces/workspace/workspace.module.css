@@ -9,7 +9,7 @@
 }
 
 .title {
-    margin-bottom: 10px !important;
+    margin-bottom: 16px !important;
 }
 
 .icon_empty {
@@ -19,4 +19,10 @@
     font-size: 2em;
     border: 1px dashed #565682;
     border-radius: 12px;
+}
+
+.segment {
+    margin: 12px 0px !important;
+    cursor: pointer;
+    border-radius: 12px !important;
 }

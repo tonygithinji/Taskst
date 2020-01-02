@@ -19,16 +19,18 @@ class NewWorkspace extends Component {
 
     render() {
         return (
-            <div className={styles.new_workspace_wrapper}>
-                <Header as="h1" textAlign="center">Create a workspace</Header>
-                <Card centered className={styles.new_workspace_card}>
-                    <Card.Content>
-                        <NewWorkspaceForm submit={this.submit} />
-                        <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
-                            <Button basic onClick={this.cancelAddWorkspace} className="button_link">Cancel</Button>
-                        </div>
-                    </Card.Content>
-                </Card>
+            <div style={{ width: "100%", height: "100%", backgroundColor: "#EDEFF2" }}>
+                <div className={styles.new_workspace_wrapper}>
+                    <Header as="h1" textAlign="center">Create a workspace</Header>
+                    <Card centered className={styles.new_workspace_card}>
+                        <Card.Content style={{ padding: "2em" }}>
+                            <NewWorkspaceForm submit={this.submit} />
+                            <div style={{ textAlign: "center", marginTop: 8, textDecoration: "underline" }}>
+                                <Button basic onClick={this.cancelAddWorkspace} className="button_link">Cancel</Button>
+                            </div>
+                        </Card.Content>
+                    </Card>
+                </div>
             </div>
         )
     }

@@ -26,20 +26,22 @@ class Workspace extends Component {
         return (
             <React.Fragment>
                 <Grid columns="equal">
-                    <Grid.Column className={styles.sidebar_wrapper}>
-                        <Sidebar history={this.props.history} />
-                    </Grid.Column>
-                    <Grid.Column width={12} className={styles.content_wrapper}>
-                        <Switch>
-                            <Route path={`${this.props.match.url}/overview`}>
-                                <Overview user={user} url={this.props.match.url} />
-                            </Route>
-                            <Route exact path={`${this.props.match.url}/lists`}>
-                                <Projects workspaceId={this.props.match.params.id} url={this.props.match.url} />
-                            </Route>
-                            <Route exact path={`${this.props.match.url}/lists/:id/tasks`} component={ProjectTasks} />
-                        </Switch>
-                    </Grid.Column>
+                    <Grid.Row style={{ paddingBottom: 0 }}>
+                        <Grid.Column stretched className={styles.sidebar_wrapper} computer={4} largeScreen={2} widescreen={2} only="computer">
+                            <Sidebar history={this.props.history} />
+                        </Grid.Column>
+                        <Grid.Column className={styles.content_wrapper}>
+                            <Switch>
+                                <Route path={`${this.props.match.url}/overview`}>
+                                    <Overview user={user} url={this.props.match.url} />
+                                </Route>
+                                <Route exact path={`${this.props.match.url}/lists`}>
+                                    <Projects workspaceId={this.props.match.params.id} url={this.props.match.url} />
+                                </Route>
+                                <Route exact path={`${this.props.match.url}/lists/:id/tasks`} component={ProjectTasks} />
+                            </Switch>
+                        </Grid.Column>
+                    </Grid.Row>
                 </Grid>
                 <NewProject history={this.props.history} />
             </React.Fragment>
