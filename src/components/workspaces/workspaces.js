@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Grid, Header, Loader } from "semantic-ui-react";
 import Workspace from "./workspace/workspace";
-import { fetchWorkspaces, workspacesReceived, setSelectedWorkspace } from "../../redux/actions/workspace";
+import { fetchWorkspaces, workspacesReceived, setSelectedWorkspace, deleteWorkspace } from "../../redux/actions/workspace";
 import EditWorkspace from "../workspace.edit";
+import ConfirmModal from "../utils/confirm-modal";
 
 class Workspaces extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class Workspaces extends Component {
         this.state = {
             loading: true,
             showModal: false,
-            workspace: {}
+            workspace: {},
+            showConfirmDialog: false,
+            workspaceIdToDelete: ""
         }
     }
 
@@ -41,9 +44,26 @@ class Workspaces extends Component {
         this.setState({ showModal: false });
     }
 
+    showConfirmDeleteWorkspaceDialog = workspaceId => {
+        this.setState({ showConfirmDialog: true, workspaceIdToDelete: workspaceId });
+    }
+
+    confirmDeleteWorkspace = confirm => {
+        if (confirm) {
+            this.deleteWorkspace(this.state.workspaceIdToDelete);
+            this.setState({ showConfirmDialog: false });
+        } else {
+            this.setState({ showConfirmDialog: false });
+        }
+    }
+
+    deleteWorkspace = workspaceId => {
+        this.props.deleteWorkspace({ workspaceId });
+    }
+
     render() {
         const { workspaces, loading, user } = this.props;
-        const { showModal, workspace } = this.state;
+        const { showModal, workspace, showConfirmDialog } = this.state;
 
         return (
             <div style={{ height: "100%", backgroundColor: "#EDEFF2", minHeight: 800 }}>
@@ -60,13 +80,25 @@ class Workspaces extends Component {
 
                                 {workspaces.length > 0 && workspaces.map(_workspace => (
                                     <Grid.Column key={_workspace._id}>
-                                        <Workspace workspace={_workspace} goToWorkspace={this.goToWorkspace} empty={false} openModal={this.openModal} />
+                                        <Workspace
+                                            workspace={_workspace}
+                                            goToWorkspace={this.goToWorkspace}
+                                            empty={false}
+                                            openModal={this.openModal}
+                                            showConfirmDeleteWorkspaceDialog={this.showConfirmDeleteWorkspaceDialog}
+                                        />
                                     </Grid.Column>
                                 ))}
                             </Grid.Row>
                         </Grid>
 
                         <EditWorkspace showModal={showModal} closeModal={this.closeModal} workspace={workspace} />
+                        {showConfirmDialog && (
+                            <ConfirmModal callback={this.confirmDeleteWorkspace} color="red">
+                                <p>Are you sure you want to delete this workspace?</p>
+                                <p>This will delete all lists and tasks in this workspace</p>
+                            </ConfirmModal>
+                        )}
                     </React.Fragment>
                 )}
             </div>
@@ -86,6 +118,7 @@ Workspaces.propTypes = {
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired,
+    deleteWorkspace: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -96,4 +129,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { fetchWorkspaces, workspacesReceived, setSelectedWorkspace })(Workspaces);
+export default connect(mapStateToProps, { fetchWorkspaces, workspacesReceived, setSelectedWorkspace, deleteWorkspace })(Workspaces);

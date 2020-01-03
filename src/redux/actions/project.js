@@ -5,7 +5,8 @@ import {
     ACTIVE_PROJECT,
     PROJECT_UPDATED,
     DELETE_PROJECT,
-    UPDATE_PROJECT_STATS
+    UPDATE_PROJECT_STATS,
+    DELETE_WORKSPACE_PROJECTS
 } from "../types";
 import api from "../../api";
 
@@ -83,5 +84,12 @@ export const updateProjectStats = task => {
             task,
             updateCount: task.complete ? 1 : -1
         }
+    }
+}
+
+export const deleteWorkspaceProjects = workspaceId => {
+    return {
+        type: DELETE_WORKSPACE_PROJECTS,
+        payload: workspaceId
     }
 }

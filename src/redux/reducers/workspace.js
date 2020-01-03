@@ -4,7 +4,8 @@ import {
     SET_SELECTED_WORKSPACE,
     UPDATE_WORKSPACE_PROJECT_DELETE,
     UPDATE_WORKSPACE_STATS,
-    WORKSPACE_UPDATED
+    WORKSPACE_UPDATED,
+    DELETE_WORKSPACE
 } from "../types";
 
 const initialState = {
@@ -63,6 +64,15 @@ const workspaceReducer = (state = initialState, action) => {
                     ...state.workspaces,
                     [action.payload._id]: action.payload
                 }
+            }
+        case DELETE_WORKSPACE:
+            // eslint-disable-next-line no-case-declarations
+            const data = { ...state.workspaces };
+            delete data[action.payload];
+
+            return {
+                ...state,
+                workspaces: data
             }
         default:
             return state;

@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./workspace.module.css";
 
-const Workspace = ({ workspace, empty, goToWorkspace, openModal }) => {
+const Workspace = ({ workspace, empty, goToWorkspace, openModal, showConfirmDeleteWorkspaceDialog }) => {
 
     const openEditWorkspaceModal = (e, workspaceDetails) => {
         openModal(workspaceDetails);
+        e.stopPropagation();
+    }
+
+    const confirmDeleteWorkspace = (e, workspaceId) => {
+        showConfirmDeleteWorkspaceDialog(workspaceId);
         e.stopPropagation();
     }
 
@@ -19,7 +24,7 @@ const Workspace = ({ workspace, empty, goToWorkspace, openModal }) => {
                     <Header as="h4" className={styles.title}>{workspace.name}</Header>
                     <div className={styles.action_icon_wrapper}>
                         <Icon name="edit outline" className={styles.action_icon} onClick={e => openEditWorkspaceModal(e, workspace)} />
-                        <Icon name="trash alternate outline" className={styles.action_icon} style={{ color: "#ff0000" }} />
+                        <Icon name="trash alternate outline" className={styles.action_icon} style={{ color: "#ff0000" }} onClick={e => confirmDeleteWorkspace(e, workspace._id)} />
                     </div>
                 </Segment>
             )}
@@ -33,7 +38,6 @@ const Workspace = ({ workspace, empty, goToWorkspace, openModal }) => {
                         <Header as="h4" className={styles.title}>New Workspace</Header>
                     </Segment>
                 </Link>
-
             )}
         </React.Fragment>
     );
@@ -41,17 +45,20 @@ const Workspace = ({ workspace, empty, goToWorkspace, openModal }) => {
 
 Workspace.propTypes = {
     workspace: PropTypes.shape({
+        _id: PropTypes.string,
         name: PropTypes.string,
         color: PropTypes.string
     }).isRequired,
     empty: PropTypes.bool.isRequired,
     goToWorkspace: PropTypes.func,
-    openModal: PropTypes.func
+    openModal: PropTypes.func,
+    showConfirmDeleteWorkspaceDialog: PropTypes.func,
 }
 
 Workspace.defaultProps = {
     goToWorkspace: () => { },
-    openModal: () => { }
+    openModal: () => { },
+    showConfirmDeleteWorkspaceDialog: () => { }
 }
 
 export default Workspace;

@@ -5,7 +5,7 @@ import {
     UPDATE_WORKSPACE_PROJECT_DELETE,
     UPDATE_WORKSPACE_STATS,
     WORKSPACE_UPDATED,
-
+    DELETE_WORKSPACE
 } from "../types";
 import api from "../../api";
 
@@ -76,5 +76,19 @@ export const workspaceUpdated = workspace => {
     return {
         type: WORKSPACE_UPDATED,
         payload: workspace
+    }
+}
+
+export const deleteWorkspaceFromUI = data => {
+    return {
+        type: DELETE_WORKSPACE,
+        payload: data.workspaceId
+    }
+}
+
+export const deleteWorkspace = data => {
+    return dispatch => {
+        dispatch(deleteWorkspaceFromUI(data));
+        return api.workspace.deleteWorkspace(data);
     }
 }
