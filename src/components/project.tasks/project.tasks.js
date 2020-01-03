@@ -126,6 +126,13 @@ class ProjectTasks extends Component {
         });
     }
 
+    handleStarTask = data => {
+        return this.props.updateTask(data)
+            .then(task => {
+                this.props.taskUpdated(task);
+            });
+    }
+
     render() {
         const { tasks, project } = this.props;
         const { showAddTask, addFirstTask, complete, loading } = this.state;
@@ -204,6 +211,7 @@ class ProjectTasks extends Component {
                                             editTask={this.handleEditTask}
                                             deleteTask={this.deleteTask}
                                             completeTask={this.handleCompleteTask}
+                                            starTask={this.handleStarTask}
                                         />)
                                 }
                                 {showAddTask && <div><AddTaskForm cancel={this.cancelAddTask} addTask={this.doAddTask} /></div>}

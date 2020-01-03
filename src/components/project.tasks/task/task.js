@@ -31,7 +31,7 @@ class Task extends Component {
 
     updateTask = () => {
         this.setState({ saving: true });
-        this.props.editTask({ task: this.state.data.task, taskId: this.props.task._id })
+        this.props.editTask({ task: { task: this.state.data.task }, taskId: this.props.task._id })
             .then(() => this.setState({ saving: false, showEdit: false }))
             .catch(() => this.setState({ saving: false, showEdit: false }));
     }
@@ -66,6 +66,11 @@ class Task extends Component {
         this.props.completeTask(task);
     }
 
+    starTask = () => {
+        const task = { ...this.props.task };
+        this.props.starTask({ task: { starred: !task.starred }, taskId: task._id });
+    }
+
     render() {
         const { task } = this.props;
         const { showEdit, saving, data, deleting, showConfirmDialog } = this.state;
@@ -77,8 +82,14 @@ class Task extends Component {
                         <div className={styles.task_checkbox}>
                             <Checkbox label={task.task} defaultChecked={task.complete} className={styles.task_label} disabled={deleting} onChange={this.completeTask} />
                         </div>
-                        {!deleting && <Icon name="edit outline" className={styles.edit_icn} onClick={this.handleEditTaskClick} />}
-                        {!deleting && <Icon name="trash alternate outline" className={styles.delete_icn} onClick={this.handleDeleteTask} />}
+                        {!deleting && (
+                            <React.Fragment>
+                                <Icon name="edit outline" className={styles.edit_icn} onClick={this.handleEditTaskClick} />
+                                {!task.starred && <Icon name="star outline" className={styles.star_icn} onClick={this.starTask} />}
+                                {task.starred && <Icon name="star" className={styles.star_icn} onClick={this.starTask} />}
+                                <Icon name="trash alternate outline" className={styles.delete_icn} onClick={this.handleDeleteTask} />
+                            </React.Fragment>
+                        )}
                         {deleting && <Icon name="spinner" loading />}
                     </div>
                 )}
@@ -106,11 +117,13 @@ Task.propTypes = {
         complete: PropTypes.bool.isRequired,
         _id: PropTypes.string.isRequired,
         projectId: PropTypes.string.isRequired,
-        workspaceId: PropTypes.string.isRequired
+        workspaceId: PropTypes.string.isRequired,
+        starred: PropTypes.bool,
     }).isRequired,
     editTask: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
-    completeTask: PropTypes.func.isRequired
+    completeTask: PropTypes.func.isRequired,
+    starTask: PropTypes.func.isRequired
 }
 
 export default Task;

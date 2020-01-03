@@ -31,6 +31,16 @@
     color: #ff0000;
 }
 
+.star_icn {
+    composes: edit_icn;
+    color: "#DCE1EE";
+}
+
 .task_segment:hover .edit_icn {
     display: inline-block !important;
+}
+
+.edit_icn:hover,
+.delete_icn:hover {
+    transform: scale(1.4);
 }

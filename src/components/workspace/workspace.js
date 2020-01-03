@@ -11,6 +11,7 @@ import Overview from "./overview";
 import Projects from "./projects";
 import ProjectTasks from "../project.tasks";
 import NewProject from "../project.new";
+import StarredTasks from "../tasks.starred";
 
 class Workspace extends Component {
     state = {};
@@ -39,6 +40,9 @@ class Workspace extends Component {
                                     <Projects workspaceId={this.props.match.params.id} url={this.props.match.url} />
                                 </Route>
                                 <Route exact path={`${this.props.match.url}/lists/:id/tasks`} component={ProjectTasks} />
+                                <Route exact path={`${this.props.match.url}/tasks/starred`}>
+                                    <StarredTasks workspaceId={this.props.match.params.id} />
+                                </Route>
                             </Switch>
                         </Grid.Column>
                     </Grid.Row>

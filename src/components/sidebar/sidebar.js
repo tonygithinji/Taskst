@@ -38,9 +38,11 @@ const Sidebar = ({ user, toggleAddProjectModal, history, selectedWorkspace }) =>
                         <NavLink to={`/workspaces/${selectedWorkspace._id}/overview`} activeClassName="menu_item_active" className={styles.menu_item}>Overview</NavLink >
                     </li>
                     <li>
-                        <NavLink to={`/workspaces/${selectedWorkspace._id}/lists`} activeClassName="menu_item_active" className={styles.menu_item}>Lists</NavLink >
+                        <NavLink to={`/workspaces/${selectedWorkspace._id}/lists`} exact activeClassName="menu_item_active" className={styles.menu_item}>Lists</NavLink >
                     </li>
-                    <li className={styles.menu_item}>Starred</li>
+                    <li>
+                        <NavLink to={`/workspaces/${selectedWorkspace._id}/tasks/starred`} exact activeClassName="menu_item_active" className={styles.menu_item}>Starred</NavLink >
+                    </li>
                     <li className={styles.menu_item}>Labels</li>
                 </ul>
             </div>

@@ -67,3 +67,9 @@ export const completeTask = task => {
         });
     }
 }
+
+export const fetchStarredTasks = data => {
+    return () => {
+        return api.task.getStarredTasks(data);
+    }
+}
