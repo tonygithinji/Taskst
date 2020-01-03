@@ -64,7 +64,7 @@ const projectReducer = (state = initialState, action) => {
                 projects: {
                     ...state.projects,
                     [action.payload.task.projectId]: {
-                        ...state.projects[action.payload.task.projectId],
+                        ...state.activeProject,
                         completedTasks: state.activeProject.completedTasks + (action.payload.updateCount)
                     }
                 }

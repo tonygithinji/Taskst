@@ -100,7 +100,7 @@ class Projects extends Component {
                             <span className={styles.filter}>Complete</span>
                         </div>
 
-                        <div>
+                        <div style={{ marginBottom: "2em" }}>
                             {
                                 projects.map(project => <Project
                                     key={project._id}

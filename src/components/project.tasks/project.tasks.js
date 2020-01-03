@@ -195,7 +195,7 @@ class ProjectTasks extends Component {
                         {loading && <Loader active size="medium" />}
 
                         {!loading && (
-                            <div>
+                            <div style={{ marginBottom: "2em" }}>
                                 {
                                     tasks.map(task =>
                                         <Task
