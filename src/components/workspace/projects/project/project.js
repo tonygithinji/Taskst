@@ -97,7 +97,7 @@ class Project extends Component {
                                             <Dropdown icon="ellipsis vertical" direction="left" floating>
                                                 <Dropdown.Menu>
                                                     <Dropdown.Item icon="eye" text="View" as={Link} to={`${url}/lists/${project._id}/tasks`} />
-                                                    <Dropdown.Item icon="times" text="Delete" onClick={this.handleDeleteProject} />
+                                                    <Dropdown.Item icon="trash alternate outline" text="Delete" onClick={this.handleDeleteProject} style={{ color: "#ff0000" }} />
                                                 </Dropdown.Menu>
                                             </Dropdown>
                                         </React.Fragment>

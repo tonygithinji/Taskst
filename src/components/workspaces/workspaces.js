@@ -4,12 +4,15 @@ import { connect } from "react-redux";
 import { Grid, Header, Loader } from "semantic-ui-react";
 import Workspace from "./workspace/workspace";
 import { fetchWorkspaces, workspacesReceived, setSelectedWorkspace } from "../../redux/actions/workspace";
+import EditWorkspace from "../workspace.edit";
 
 class Workspaces extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true
+            loading: true,
+            showModal: false,
+            workspace: {}
         }
     }
 
@@ -30,10 +33,20 @@ class Workspaces extends Component {
         this.props.history.push(`/workspaces/${workspace._id}/overview`);
     }
 
+    openModal = (workspace) => {
+        this.setState({ showModal: true, workspace });
+    }
+
+    closeModal = () => {
+        this.setState({ showModal: false });
+    }
+
     render() {
         const { workspaces, loading, user } = this.props;
+        const { showModal, workspace } = this.state;
+
         return (
-            <div style={{ height: "100vh", backgroundColor: "#EDEFF2" }}>
+            <div style={{ height: "100%", backgroundColor: "#EDEFF2", minHeight: 800 }}>
                 {loading && <Loader active size="big" />}
 
                 {!loading && (
@@ -45,14 +58,15 @@ class Workspaces extends Component {
                                     <Workspace workspace={{}} empty />
                                 </Grid.Column>
 
-                                {workspaces.length > 0 && workspaces.map(workspace => (
-                                    <Grid.Column key={workspace._id}>
-                                        <Workspace workspace={workspace} goToWorkspace={this.goToWorkspace} empty={false} />
+                                {workspaces.length > 0 && workspaces.map(_workspace => (
+                                    <Grid.Column key={_workspace._id}>
+                                        <Workspace workspace={_workspace} goToWorkspace={this.goToWorkspace} empty={false} openModal={this.openModal} />
                                     </Grid.Column>
                                 ))}
-
                             </Grid.Row>
                         </Grid>
+
+                        <EditWorkspace showModal={showModal} closeModal={this.closeModal} workspace={workspace} />
                     </React.Fragment>
                 )}
             </div>

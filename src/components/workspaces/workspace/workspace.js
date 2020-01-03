@@ -1,16 +1,26 @@
 import React from "react";
 import { Segment, Header, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import styles from "./workspace.module.css";
 
-const Workspace = ({ workspace, empty, goToWorkspace }) => {
+const Workspace = ({ workspace, empty, goToWorkspace, openModal }) => {
+
+    const openEditWorkspaceModal = (e, workspaceDetails) => {
+        openModal(workspaceDetails);
+        e.stopPropagation();
+    }
+
     return (
         <React.Fragment>
             {!empty && (
                 <Segment textAlign="center" className={styles.segment} onClick={() => goToWorkspace(workspace)}>
                     <div className={styles.icon} style={{ backgroundColor: workspace.color }}>{workspace.name.slice(0, 1)}</div>
                     <Header as="h4" className={styles.title}>{workspace.name}</Header>
+                    <div className={styles.action_icon_wrapper}>
+                        <Icon name="edit outline" className={styles.action_icon} onClick={e => openEditWorkspaceModal(e, workspace)} />
+                        <Icon name="trash alternate outline" className={styles.action_icon} style={{ color: "#ff0000" }} />
+                    </div>
                 </Segment>
             )}
 
@@ -26,7 +36,6 @@ const Workspace = ({ workspace, empty, goToWorkspace }) => {
 
             )}
         </React.Fragment>
-
     );
 };
 
@@ -36,11 +45,13 @@ Workspace.propTypes = {
         color: PropTypes.string
     }).isRequired,
     empty: PropTypes.bool.isRequired,
-    goToWorkspace: PropTypes.func
+    goToWorkspace: PropTypes.func,
+    openModal: PropTypes.func
 }
 
 Workspace.defaultProps = {
-    goToWorkspace: () => { }
+    goToWorkspace: () => { },
+    openModal: () => { }
 }
 
 export default Workspace;

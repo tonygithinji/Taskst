@@ -32,7 +32,7 @@ const Sidebar = ({ user, toggleAddProjectModal, history, selectedWorkspace }) =>
                     </Dropdown>
                 </div>
             </div>
-            <div>
+            <div style={{ minHeight: 500 }}>
                 <ul className={styles.menu}>
                     <li>
                         <NavLink to={`/workspaces/${selectedWorkspace._id}/overview`} activeClassName="menu_item_active" className={styles.menu_item}>Overview</NavLink >

@@ -9,7 +9,7 @@
 }
 
 .title {
-    margin-bottom: 16px !important;
+    margin-bottom: 24px !important;
 }
 
 .icon_empty {
@@ -25,4 +25,32 @@
     margin: 12px 0px !important;
     cursor: pointer;
     border-radius: 12px !important;
+    transition: ease-in-out 0.2s;
+}
+
+.action_icon {
+    display: none !important;
+    transition: ease-in-out 0.2s;
+    margin: 0 6px !important;
+}
+
+.action_icon:hover {
+    transform: scale(1.4);
+}
+
+.segment:hover .action_icon {
+    display: inline-block !important;
+}
+
+.segment:hover {
+    transform: scale(1.02);
+    position: absolute;
+    width: 90%;
+}
+
+.action_icon_wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
 }

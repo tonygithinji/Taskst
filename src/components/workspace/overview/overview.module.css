@@ -57,3 +57,10 @@
     background-color: #565682;
     color: #ffffff;
 }
+
+.summaryListWrapper {
+    padding: 1rem !important;
+    background-color: rgb(220, 225, 238);
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 12px !important;
+}

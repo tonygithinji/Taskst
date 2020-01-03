@@ -153,7 +153,7 @@ class Overview extends Component {
                                                             )}
                                                         </div>
                                                     </Grid.Column>
-                                                    <Grid.Column style={{ padding: "1rem", backgroundColor: "#DCE1EE" }} width={4}>
+                                                    <Grid.Column className={styles.summaryListWrapper} width={4}>
                                                         <Header as="h3" textAlign="center">Quick Summary</Header>
                                                         <List style={{ flexGrow: 999 }}>
                                                             <List.Item className={styles.summaryList}>
